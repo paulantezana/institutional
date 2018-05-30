@@ -1,10 +1,11 @@
-package models
+package institucional
 
 import "github.com/jinzhu/gorm"
 
-// Filial type definition
-type Filial struct {
+// Semestre type definition
+type Semestre struct {
 	gorm.Model
 	Nombre string `json:"nombre" gorm:"not null"`
+	Year   int32  `json:"year"`
 	Estado bool   `json:"estado" gorm:"default:'true'"`
 }

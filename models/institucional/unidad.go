@@ -1,4 +1,4 @@
-package models
+package institucional
 
 import "github.com/jinzhu/gorm"
 
