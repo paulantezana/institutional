@@ -18,5 +18,8 @@ func Migrate() {
 	db.CreateTable(&institucional.Modulo{})
 	db.CreateTable(&institucional.Unidad{})
 
+	// ForeignKey Relations table
+	db.Model(&institucional.Instituto{}).Related(&institucional.Filial{})
+
 	db.CreateTable(&institucional.Usuario{})
 }

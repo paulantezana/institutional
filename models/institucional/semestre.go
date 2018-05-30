@@ -8,4 +8,6 @@ type Semestre struct {
 	Nombre string `json:"nombre" gorm:"not null"`
 	Year   int32  `json:"year"`
 	Estado bool   `json:"estado" gorm:"default:'true'"`
+
+	Modulos []Modulo `json:"modulos,omitempty"`
 }

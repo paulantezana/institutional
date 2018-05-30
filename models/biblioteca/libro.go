@@ -17,4 +17,6 @@ type Libro struct {
 	YearEdicion       int32  `json:"year_edicion"`
 	LugarEdicion      string `json:"lugar_edicion"`
 	Estado            bool   `json:"estado" gorm:"default:'true'"`
+
+	Prestamos []Prestamo `json:"prestamos"`
 }

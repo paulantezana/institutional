@@ -26,4 +26,7 @@ type Filial struct {
 	ResolucionRevalidacionNumero string    `json:"resolucion_revalidacion_numero"`
 	ResolucionRevalidacionFecha  time.Time `json:"resolucion_revalidacion_fecha"`
 	Estado                       bool      `json:"estado" gorm:"default:'true'"`
+
+	InstitutoID uint `json:"instituto_id"`
+	//Carreras []Carrera `json:"carreras,omitempty"`
 }

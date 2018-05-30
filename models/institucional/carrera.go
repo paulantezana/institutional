@@ -10,4 +10,6 @@ type Carrera struct {
 	Descripcion string `json:"descripcion"`
 	Creacion    int32  `json:"creacion"`
 	Estado      bool   `json:"estado" gorm:"default:'true'"`
+
+	Semestres []Semestre `json:"semestres,omitempty"`
 }

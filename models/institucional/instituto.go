@@ -6,4 +6,6 @@ import "github.com/jinzhu/gorm"
 type Instituto struct {
 	gorm.Model
 	Estado bool `json:"estado" gorm:"default:'true'"`
+
+	Filiales []Filial `json:"filiales,omitempty"`
 }
