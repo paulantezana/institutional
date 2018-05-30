@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
 	"log"
 	"os"
-    _ "github.com/lib/pq"
 )
 
 // Config models
