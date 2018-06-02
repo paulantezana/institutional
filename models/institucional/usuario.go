@@ -12,6 +12,7 @@ type Usuario struct {
 	gorm.Model
 	Usuario                string    `json:"usuario"`
 	Clave                  string    `json:"clave"`
+	ConfirmarClave         string    `json:"confirmar_clave,omitempty" gorm:"-"`
 	ClaveRecuperar         string    `json:"clave_recuperar"`
 	FechaModificacionClave time.Time `json:"fecha_modificacion_clave"`
 	Estado                 bool      `json:"estado" gorm:"default:'true'"`

@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"github.com/paulantezana/institutional/api"
-	"github.com/paulantezana/institutional/migrations"
 )
 
 func main() {
@@ -12,10 +10,10 @@ func main() {
 
 	// Migrations
 	//if isMigrate == "yes" {
-	fmt.Println("Init migration...")
-	migrations.Migrate()
-	fmt.Println("End migration...")
-	//}
+	//fmt.Println("Init migration...")
+	//migrations.Migrate()
+	//fmt.Println("End migration...")
+	////}
 
 	// Starting API
 	api.Start()
