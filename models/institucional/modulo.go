@@ -1,14 +1,30 @@
 package institucional
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/graphql-go/graphql"
+	"github.com/jinzhu/gorm"
+)
 
 // Modulo type definition
 type Modulo struct {
 	gorm.Model
-	Nombre      string   `json:"nombre" gorm:"not null"`
-	Tipo        string   `json:"tipo"`
-	Descripcion string   `json:"descripcion"`
-	Estado      bool     `json:"estado" gorm:"default:'true'"`
+	Nombre      string `json:"nombre" gorm:"not null"`
+	Tipo        string `json:"tipo"`
+	Descripcion string `json:"descripcion"`
+	Estado      bool   `json:"estado" gorm:"default:'true'"`
 
-	Unidades    []Unidad `json:"unidades,omitempty"`
+	Unidades []Unidad `json:"unidades,omitempty"`
 }
+
+// Model GraphQL
+var ModuloType = graphql.NewObject(
+	graphql.ObjectConfig{
+		Name: "Modulo",
+		Fields: graphql.Fields{
+			"nombre":      &graphql.Field{Type: graphql.String},
+			"tipo":        &graphql.Field{Type: graphql.String},
+			"descripcion": &graphql.Field{Type: graphql.String},
+			"estado":      &graphql.Field{Type: graphql.Boolean},
+		},
+	},
+)

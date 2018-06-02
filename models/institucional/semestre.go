@@ -1,6 +1,9 @@
 package institucional
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/graphql-go/graphql"
+	"github.com/jinzhu/gorm"
+)
 
 // Semestre type definition
 type Semestre struct {
@@ -11,3 +14,15 @@ type Semestre struct {
 
 	Modulos []Modulo `json:"modulos,omitempty"`
 }
+
+// Model GraphQL
+var SemestreType = graphql.NewObject(
+	graphql.ObjectConfig{
+		Name: "Semestre",
+		Fields: graphql.Fields{
+			"nombre": &graphql.Field{Type: graphql.String},
+			"year":   &graphql.Field{Type: graphql.Int},
+			"estado": &graphql.Field{Type: graphql.Boolean},
+		},
+	},
+)

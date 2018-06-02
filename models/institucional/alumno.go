@@ -1,6 +1,7 @@
 package institucional
 
 import (
+	"github.com/graphql-go/graphql"
 	"github.com/jinzhu/gorm"
 	"time"
 )
@@ -25,3 +26,11 @@ type Alumno struct {
 	FechaPromocion  time.Time `json:"fecha_promocion"`
 	Estado          bool      `json:"estado" gorm:"default:'true'"`
 }
+
+// Model GraphQL
+var AlumnoType = graphql.NewObject(
+	graphql.ObjectConfig{
+		Name:   "Alumno",
+		Fields: graphql.Fields{},
+	},
+)

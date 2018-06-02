@@ -1,6 +1,9 @@
 package institucional
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/graphql-go/graphql"
+	"github.com/jinzhu/gorm"
+)
 
 // Unidad type definition
 type Unidad struct {
@@ -10,3 +13,16 @@ type Unidad struct {
 	Horas   int32  `json:"horas" gorm:"not null"`
 	Estado  bool   `json:"estado" gorm:"default:'true'"`
 }
+
+// Model GraphQL
+var UnidadType = graphql.NewObject(
+	graphql.ObjectConfig{
+		Name: "Unidad",
+		Fields: graphql.Fields{
+			"nombre":  &graphql.Field{Type: graphql.String},
+			"credito": &graphql.Field{Type: graphql.Int},
+			"horas":   &graphql.Field{Type: graphql.Int},
+			"estado":  &graphql.Field{Type: graphql.Boolean},
+		},
+	},
+)

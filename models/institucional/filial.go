@@ -1,6 +1,7 @@
 package institucional
 
 import (
+	"github.com/graphql-go/graphql"
 	"github.com/jinzhu/gorm"
 	"time"
 )
@@ -30,3 +31,11 @@ type Filial struct {
 	InstitutoID uint `json:"instituto_id"`
 	//Carreras []Carrera `json:"carreras,omitempty"`
 }
+
+// Model GraphQL
+var FilialType = graphql.NewObject(
+	graphql.ObjectConfig{
+		Name:   "Filial",
+		Fields: graphql.Fields{},
+	},
+)
