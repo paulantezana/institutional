@@ -1,10 +1,10 @@
 package api
 
 import (
+	"github.com/graphql-go/handler"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/paulantezana/institutional/controller"
-    "github.com/graphql-go/handler"
 )
 
 // Start is starting api web service
@@ -37,15 +37,15 @@ func Start() {
 	//api.Use(middleware.JWTWithConfig(config))
 
 	// Grupo de ruta GRAPHQL
-    httpHandler := handler.New(&handler.Config{
-        Schema: &Schema,
-        Pretty: true,
-        //GraphiQL: true,
-    })
+	httpHandler := handler.New(&handler.Config{
+		Schema: &Schema,
+		Pretty: true,
+		//GraphiQL: true,
+	})
 
-    gql := e.Group("/graphql")
-    //gql.Use(middleware.JWTWithConfig(config))
-    gql.POST("",echo.WrapHandler(httpHandler))
+	gql := e.Group("/graphql")
+	//gql.Use(middleware.JWTWithConfig(config))
+	gql.POST("", echo.WrapHandler(httpHandler))
 
 	// ==================================================================================================
 	// Toda las rutas del api

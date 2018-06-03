@@ -1,8 +1,13 @@
 package nota
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+)
 
 // Nota type definition
 type Nota struct {
-	gorm.Model
+	ID        uint       `json:"id" gorm:"primary_key"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
 }

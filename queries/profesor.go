@@ -6,17 +6,17 @@ import (
 	"github.com/paulantezana/institutional/models/institucional"
 )
 
-func GetUsuarioQuery() *graphql.Field {
+func GetProfesorQuery() *graphql.Field {
 	return &graphql.Field{
-		Type: graphql.NewList(institucional.UsuarioType),
+		Type: graphql.NewList(institucional.ProfesorType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			db := config.GetConnection()
 			defer db.Close()
-			usuarios := make([]institucional.Usuario, 0)
-			if err := db.Find(&usuarios).Error; err != nil {
+			profesores := make([]institucional.Semestre, 0)
+			if err := db.Find(&profesores).Error; err != nil {
 				return nil, err
 			}
-			return usuarios, nil
+			return profesores, nil
 		},
 	}
 }

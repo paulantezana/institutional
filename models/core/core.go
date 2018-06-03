@@ -1,12 +1,17 @@
 package core
 
-import "github.com/jinzhu/gorm"
+import (
+	"time"
+)
 
 type Core struct {
-	gorm.Model
+	ID        uint       `json:"id" gorm:"primary_key"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
 }
 
 // Database custom table name
 func (Core) TableName() string {
-    return "core"
+	return "core"
 }
