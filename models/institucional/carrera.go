@@ -14,6 +14,7 @@ type Carrera struct {
 	Creacion    int32  `json:"creacion"`
 	Estado      bool   `json:"estado" gorm:"default:'true'"`
 
+	FilialID uint `json:"filial_id"`
 	Semestres []Semestre `json:"semestres,omitempty"`
 }
 

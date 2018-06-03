@@ -12,6 +12,7 @@ type Semestre struct {
 	Year   int32  `json:"year"`
 	Estado bool   `json:"estado" gorm:"default:'true'"`
 
+	CarreraID uint `json:"carrera_id"`
 	Modulos []Modulo `json:"modulos,omitempty"`
 }
 

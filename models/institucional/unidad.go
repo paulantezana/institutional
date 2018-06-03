@@ -12,6 +12,7 @@ type Unidad struct {
 	Credito int32  `json:"credito" gorm:"not null"`
 	Horas   int32  `json:"horas" gorm:"not null"`
 	Estado  bool   `json:"estado" gorm:"default:'true'"`
+	ModuloID uint `json:"modulo_id"`
 }
 
 func (Unidad) TableName() string {

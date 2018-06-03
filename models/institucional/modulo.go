@@ -13,6 +13,7 @@ type Modulo struct {
 	Descripcion string `json:"descripcion"`
 	Estado      bool   `json:"estado" gorm:"default:'true'"`
 
+	SemestreID uint `json:"semestre_id"`
 	Unidades []Unidad `json:"unidades,omitempty"`
 }
 
