@@ -9,3 +9,7 @@ type CategoriaLibro struct {
 
 	Libros []Libro `json:"libros,omitempty"`
 }
+
+func (CategoriaLibro) TableName() string {
+    return "categoria_libros"
+}

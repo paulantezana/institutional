@@ -20,3 +20,7 @@ type Libro struct {
 
 	Prestamos []Prestamo `json:"prestamos"`
 }
+
+func (Libro) TableName() string {
+    return "libros"
+}

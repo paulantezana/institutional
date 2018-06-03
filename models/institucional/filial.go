@@ -28,8 +28,12 @@ type Filial struct {
 	ResolucionRevalidacionFecha  time.Time `json:"resolucion_revalidacion_fecha"`
 	Estado                       bool      `json:"estado" gorm:"default:'true'"`
 
-	InstitutoID uint `json:"instituto_id"`
-	//Carreras []Carrera `json:"carreras,omitempty"`
+	InstitutoID uint      `json:"instituto_id"`
+	Carreras    []Carrera `json:"carreras,omitempty" `
+}
+
+func (Filial) TableName() string {
+	return "filiales"
 }
 
 // Model GraphQL

@@ -18,6 +18,10 @@ type Usuario struct {
 	Estado                 bool      `json:"estado" gorm:"default:'true'"`
 }
 
+func (Usuario) TableName() string {
+    return "usuarios"
+}
+
 // Model GraphQL
 var UsuarioType = graphql.NewObject(
 	graphql.ObjectConfig{

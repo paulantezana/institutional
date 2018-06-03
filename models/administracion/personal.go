@@ -25,3 +25,7 @@ type Personal struct {
 	FechaRetiro     time.Time `json:"fecha_retiro"`
 	Estado          bool      `json:"estado" gorm:"default:'true'"`
 }
+
+func (Personal) TableName() string {
+    return "personales"
+}

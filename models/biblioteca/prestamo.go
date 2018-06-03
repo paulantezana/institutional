@@ -14,3 +14,7 @@ type Prestamo struct {
 	Observacion     string    `json:"observacion"`
 	Estado          bool      `json:"estado" gorm:"default:'true'"`
 }
+
+func (Prestamo) TableName() string {
+    return "prestamos"
+}

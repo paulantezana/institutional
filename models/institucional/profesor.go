@@ -33,6 +33,10 @@ type Profesor struct {
 	Estado           bool      `json:"estado" gorm:"default:'true'"`
 }
 
+func (Profesor) TableName() string {
+    return "profesores"
+}
+
 // Model GraphQL
 var ProfesorType = graphql.NewObject(
 	graphql.ObjectConfig{

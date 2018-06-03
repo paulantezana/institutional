@@ -16,6 +16,10 @@ type Modulo struct {
 	Unidades []Unidad `json:"unidades,omitempty"`
 }
 
+func (Modulo) TableName() string {
+	return "modulos"
+}
+
 // Model GraphQL
 var ModuloType = graphql.NewObject(
 	graphql.ObjectConfig{

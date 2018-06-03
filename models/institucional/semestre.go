@@ -15,6 +15,10 @@ type Semestre struct {
 	Modulos []Modulo `json:"modulos,omitempty"`
 }
 
+func (Semestre) TableName() string {
+    return "semestres"
+}
+
 // Model GraphQL
 var SemestreType = graphql.NewObject(
 	graphql.ObjectConfig{

@@ -8,3 +8,7 @@ type Monto struct {
 	Cantidad float32 `json:"cantidad"`
 	Estado   bool    `json:"estado" gorm:"default:'true'"`
 }
+
+func (Monto) TableName() string {
+    return "montos"
+}

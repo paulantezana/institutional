@@ -14,6 +14,10 @@ type Unidad struct {
 	Estado  bool   `json:"estado" gorm:"default:'true'"`
 }
 
+func (Unidad) TableName() string {
+	return "unidades"
+}
+
 // Model GraphQL
 var UnidadType = graphql.NewObject(
 	graphql.ObjectConfig{

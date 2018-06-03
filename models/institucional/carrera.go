@@ -17,6 +17,10 @@ type Carrera struct {
 	Semestres []Semestre `json:"semestres,omitempty"`
 }
 
+func (Carrera) TableName() string {
+    return "carreras"
+}
+
 // Model GraphQL
 var CarreraType = graphql.NewObject(
 	graphql.ObjectConfig{

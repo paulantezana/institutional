@@ -11,3 +11,7 @@ type Matricula struct {
 	Observacion    string    `json:"observacion"`
 	Estado         bool      `json:"estado" gorm:"default:'true'"`
 }
+
+func (Matricula) TableName() string {
+    return "matriculas"
+}
