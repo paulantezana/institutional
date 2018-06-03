@@ -16,6 +16,7 @@ type Semestre struct {
 	Modulos []Modulo `json:"modulos,omitempty"`
 }
 
+// Database custom table name
 func (Semestre) TableName() string {
     return "semestres"
 }

@@ -18,6 +18,7 @@ type Carrera struct {
 	Semestres []Semestre `json:"semestres,omitempty"`
 }
 
+// Database custom table name
 func (Carrera) TableName() string {
     return "carreras"
 }

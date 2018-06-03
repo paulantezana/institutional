@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Matricula type definition
 type Matricula struct {
 	gorm.Model
 	FechaMatricula time.Time `json:"fecha_matricula"`
@@ -12,6 +13,7 @@ type Matricula struct {
 	Estado         bool      `json:"estado" gorm:"default:'true'"`
 }
 
+// Database custom table name
 func (Matricula) TableName() string {
     return "matriculas"
 }

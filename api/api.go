@@ -4,7 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/paulantezana/institutional/controller"
-	"github.com/paulantezana/institutional/security"
+    "github.com/graphql-go/handler"
 )
 
 // Start is starting api web service
@@ -26,15 +26,26 @@ func Start() {
 	// para despues hacer toda las peticiones a la api
 	e.POST("/login", controller.Login)
 
-	// API: con proteccion de autenticacion mediante de tokens de seguridad
-	api := e.Group("/api")
+	// Midelware de seguridad
+	//config := middleware.JWTConfig{
+	//	Claims:     &security.Claim{},
+	//	SigningKey: []byte("secret"),
+	//}
 
-	// Configuracion del middleware con los claims personalizados
-	config := middleware.JWTConfig{
-		Claims:     &security.Claim{},
-		SigningKey: []byte("secret"),
-	}
-	api.Use(middleware.JWTWithConfig(config))
+	// Grupo de rutas de API REST FULL
+	api := e.Group("/api")
+	//api.Use(middleware.JWTWithConfig(config))
+
+	// Grupo de ruta GRAPHQL
+    httpHandler := handler.New(&handler.Config{
+        Schema: &Schema,
+        Pretty: true,
+        //GraphiQL: true,
+    })
+
+    gql := e.Group("/graphql")
+    //gql.Use(middleware.JWTWithConfig(config))
+    gql.POST("",echo.WrapHandler(httpHandler))
 
 	// ==================================================================================================
 	// Toda las rutas del api

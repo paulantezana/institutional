@@ -21,6 +21,7 @@ type Libro struct {
 	Prestamos []Prestamo `json:"prestamos"`
 }
 
+// Database custom table name
 func (Libro) TableName() string {
     return "libros"
 }

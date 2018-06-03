@@ -15,6 +15,7 @@ type Unidad struct {
 	ModuloID uint `json:"modulo_id"`
 }
 
+// Database custom table name
 func (Unidad) TableName() string {
 	return "unidades"
 }

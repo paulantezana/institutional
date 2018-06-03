@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Alumno type definition
 type Alumno struct {
 	gorm.Model
 	Dni             string    `json:"dni" gorm:"not null; unique"`
@@ -26,6 +27,7 @@ type Alumno struct {
 	Estado          bool      `json:"estado" gorm:"default:'true'"`
 }
 
+// Database custom table name
 func (Alumno) TableName() string {
     return "alumnos"
 }

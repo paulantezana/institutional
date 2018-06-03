@@ -17,6 +17,7 @@ type Modulo struct {
 	Unidades []Unidad `json:"unidades,omitempty"`
 }
 
+// Database custom table name
 func (Modulo) TableName() string {
 	return "modulos"
 }

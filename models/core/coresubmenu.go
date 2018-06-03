@@ -6,6 +6,7 @@ type CoreSubMenu struct {
 	gorm.Model
 }
 
+// Database custom table name
 func (CoreSubMenu) TableName() string {
     return "core_sub_menus"
 }

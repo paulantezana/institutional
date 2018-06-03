@@ -31,6 +31,7 @@ type Filial struct {
 	Carreras    []Carrera `json:"carreras,omitempty" `
 }
 
+// Database custom table name
 func (Filial) TableName() string {
 	return "filiales"
 }

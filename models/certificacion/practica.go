@@ -6,6 +6,7 @@ type Practica struct {
 	gorm.Model
 }
 
+// Database custom table name
 func (Practica) TableName() string {
     return "practicas"
 }

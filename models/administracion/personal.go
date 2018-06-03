@@ -26,6 +26,7 @@ type Personal struct {
 	Estado          bool      `json:"estado" gorm:"default:'true'"`
 }
 
+// Database custom table name
 func (Personal) TableName() string {
     return "personales"
 }

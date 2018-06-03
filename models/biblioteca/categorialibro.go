@@ -10,6 +10,7 @@ type CategoriaLibro struct {
 	Libros []Libro `json:"libros,omitempty"`
 }
 
+// Database custom table name
 func (CategoriaLibro) TableName() string {
     return "categoria_libros"
 }

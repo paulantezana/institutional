@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// Profesor type definition
 type Profesor struct {
 	gorm.Model
 	Dni              string    `json:"dni" gorm:"not null; unique"`
@@ -33,6 +34,7 @@ type Profesor struct {
 	Estado           bool      `json:"estado" gorm:"default:'true'"`
 }
 
+// Database custom table name
 func (Profesor) TableName() string {
     return "profesores"
 }

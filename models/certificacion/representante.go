@@ -6,6 +6,7 @@ type Representante struct {
 	gorm.Model
 }
 
+// Database custom table name
 func (Representante) TableName() string {
     return "representantes"
 }

@@ -12,6 +12,7 @@ type Instituto struct {
 	Filiales []Filial `json:"filiales,omitempty"`
 }
 
+// Database custom table name
 func (Instituto) TableName() string {
     return "institutos"
 }

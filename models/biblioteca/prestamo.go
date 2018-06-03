@@ -15,6 +15,7 @@ type Prestamo struct {
 	Estado          bool      `json:"estado" gorm:"default:'true'"`
 }
 
+// Database custom table name
 func (Prestamo) TableName() string {
     return "prestamos"
 }
