@@ -3,8 +3,8 @@ package controller
 import (
 	"github.com/labstack/echo"
 	"github.com/paulantezana/institutional/config"
-	"github.com/paulantezana/institutional/models/institucional"
 	"net/http"
+    "github.com/paulantezana/institutional/models"
 )
 
 func GetCarreras(c echo.Context) error {
@@ -13,7 +13,7 @@ func GetCarreras(c echo.Context) error {
 	defer db.Close()
 
 	// Execute operations
-	carreras := make([]institucional.Carrera, 0)
+	carreras := make([]models.Carrera, 0)
 	if err := db.Find(&carreras).Error; err != nil {
 		return err
 	}
@@ -24,7 +24,7 @@ func GetCarreras(c echo.Context) error {
 
 func CreateCarrera(c echo.Context) error {
 	// Get data json
-	carrera := institucional.Carrera{}
+	carrera := models.Carrera{}
 	if err := c.Bind(&carrera); err != nil {
 		return err
 	}
@@ -44,7 +44,7 @@ func CreateCarrera(c echo.Context) error {
 
 func UpdateCarrera(c echo.Context) error {
 	// Get data json
-	carrera := institucional.Carrera{}
+	carrera := models.Carrera{}
 	if err := c.Bind(&carrera); err != nil {
 		return err
 	}
@@ -64,7 +64,7 @@ func UpdateCarrera(c echo.Context) error {
 
 func DeleteCarrera(c echo.Context) error {
 	// Get data json
-	carrera := institucional.Carrera{}
+	carrera := models.Carrera{}
 	if err := c.Bind(&carrera); err != nil {
 		return err
 	}

@@ -2,13 +2,13 @@ package security
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/paulantezana/institutional/models/institucional"
 	"log"
 	"time"
+    "github.com/paulantezana/institutional/models"
 )
 
 // GenerateJWT generate token custom claims
-func GenerateJWT(user institucional.Usuario) string {
+func GenerateJWT(user models.Usuario) string {
 	// Set custom claims
 	claims := &Claim{
 		user,

@@ -2,10 +2,10 @@ package security
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/paulantezana/institutional/models/institucional"
+    "github.com/paulantezana/institutional/models"
 )
 
 type Claim struct {
-	Usuario institucional.Usuario `json:"usuario"`
+	Usuario models.Usuario `json:"usuario"`
 	jwt.StandardClaims
 }

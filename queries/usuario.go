@@ -3,16 +3,16 @@ package queries
 import (
 	"github.com/graphql-go/graphql"
 	"github.com/paulantezana/institutional/config"
-	"github.com/paulantezana/institutional/models/institucional"
+	"github.com/paulantezana/institutional/models"
 )
 
 func GetUsuarioQuery() *graphql.Field {
 	return &graphql.Field{
-		Type: graphql.NewList(institucional.UsuarioType),
+		Type: graphql.NewList(models.UsuarioType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			db := config.GetConnection()
 			defer db.Close()
-			usuarios := make([]institucional.Usuario, 0)
+			usuarios := make([]models.Usuario, 0)
 			if err := db.Find(&usuarios).Error; err != nil {
 				return nil, err
 			}

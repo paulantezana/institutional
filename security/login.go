@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"github.com/labstack/echo"
 	"github.com/paulantezana/institutional/config"
-	"github.com/paulantezana/institutional/models/institucional"
 	"net/http"
+    "github.com/paulantezana/institutional/models"
 )
 
 // Login login user in api
 func Login(c echo.Context) error {
-	user := institucional.Usuario{}
+	user := models.Usuario{}
 	if err := c.Bind(&user); err != nil {
 		return err
 	}

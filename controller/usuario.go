@@ -6,14 +6,14 @@ import (
 	"github.com/labstack/echo"
 	"github.com/paulantezana/institutional/config"
 	"github.com/paulantezana/institutional/helpers"
-	"github.com/paulantezana/institutional/models/institucional"
 	"github.com/paulantezana/institutional/security"
 	"net/http"
+    "github.com/paulantezana/institutional/models"
 )
 
 func Login(c echo.Context) error {
 	// Get data json
-	user := institucional.Usuario{}
+	user := models.Usuario{}
 	if err := c.Bind(&user); err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func GetUsuario(c echo.Context) error {
 	defer db.Close()
 
 	// Execute operations
-	usuarios := make([]institucional.Usuario, 0)
+	usuarios := make([]models.Usuario, 0)
 	if err := db.Find(&usuarios).Error; err != nil {
 		return err
 	}
@@ -59,7 +59,7 @@ func GetUsuario(c echo.Context) error {
 
 func CreateUsuario(c echo.Context) error {
 	// Get data json
-	usuario := institucional.Usuario{}
+	usuario := models.Usuario{}
 	if err := c.Bind(&usuario); err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func CreateUsuario(c echo.Context) error {
 
 func UpdateUsuario(c echo.Context) error {
 	// Get data json
-	usuario := institucional.Usuario{}
+	usuario := models.Usuario{}
 	if err := c.Bind(&usuario); err != nil {
 		return err
 	}
@@ -114,7 +114,7 @@ func UpdateUsuario(c echo.Context) error {
 
 func DeleteUsuario(c echo.Context) error {
 	// Get data json
-	usuario := institucional.Usuario{}
+	usuario := models.Usuario{}
 	if err := c.Bind(&usuario); err != nil {
 		return err
 	}

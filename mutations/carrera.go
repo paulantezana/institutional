@@ -3,12 +3,12 @@ package mutations
 import (
 	"github.com/graphql-go/graphql"
 	"github.com/paulantezana/institutional/config"
-	"github.com/paulantezana/institutional/models/institucional"
+    "github.com/paulantezana/institutional/models"
 )
 
 func CreateCarreraMutation() *graphql.Field {
 	return &graphql.Field{
-		Type: institucional.CarreraType,
+		Type: models.CarreraType,
 		Args: graphql.FieldConfigArgument{
 			"nombre":      &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
 			"logo":        &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
@@ -16,7 +16,7 @@ func CreateCarreraMutation() *graphql.Field {
 			"creacion":    &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			carrera := institucional.Carrera{
+			carrera := models.Carrera{
 				Nombre:      p.Args["nombre"].(string),
 				Logo:        p.Args["logo"].(string),
 				Descripcion: p.Args["descripcion"].(string),
@@ -37,7 +37,7 @@ func CreateCarreraMutation() *graphql.Field {
 
 func UpdateCarreraMutation() *graphql.Field {
 	return &graphql.Field{
-		Type: institucional.CarreraType,
+		Type: models.CarreraType,
 		Args: graphql.FieldConfigArgument{
 			"id":          &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
 			"nombre":      &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
@@ -46,7 +46,7 @@ func UpdateCarreraMutation() *graphql.Field {
 			"creacion":    &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			carrera := institucional.Carrera{
+			carrera := models.Carrera{
 				ID:          p.Args["nombre"].(uint),
 				Nombre:      p.Args["nombre"].(string),
 				Logo:        p.Args["logo"].(string),
