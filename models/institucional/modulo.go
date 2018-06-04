@@ -11,13 +11,12 @@ type Modulo struct {
 	CreatedAt   time.Time  `json:"created_at"`
 	UpdatedAt   time.Time  `json:"updated_at"`
 	DeletedAt   *time.Time `json:"deleted_at"`
-	Nombre      string     `json:"nombre" gorm:"not null"`
+	Nombre      string     `json:"nombre" gorm:"type:varchar(128); not null"`
 	Tipo        string     `json:"tipo"`
 	Descripcion string     `json:"descripcion"`
 	Estado      bool       `json:"estado" gorm:"default:'true'"`
-
-	SemestreID uint     `json:"semestre_id"`
-	Unidades   []Unidad `json:"unidades,omitempty"`
+	SemestreID  uint       `json:"semestre_id"`
+	Unidades    []Unidad   `json:"unidades,omitempty"`
 }
 
 // Database custom table name
@@ -37,6 +36,7 @@ var ModuloType = graphql.NewObject(
 			"nombre":      &graphql.Field{Type: graphql.String},
 			"tipo":        &graphql.Field{Type: graphql.String},
 			"descripcion": &graphql.Field{Type: graphql.String},
+			"semestre_id": &graphql.Field{Type: graphql.Int},
 			"estado":      &graphql.Field{Type: graphql.Boolean},
 		},
 	},

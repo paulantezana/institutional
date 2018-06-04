@@ -18,6 +18,8 @@ type Usuario struct {
 	ClaveRecuperar         string     `json:"clave_recuperar"`
 	FechaModificacionClave time.Time  `json:"fecha_modificacion_clave"`
 	Estado                 bool       `json:"estado" gorm:"default:'true'"`
+	Alumno                 []Alumno   `json:"alumno, omitempty"`
+	Profesor               []Profesor `json:"profesor, omitempty"`
 }
 
 // Database custom table name

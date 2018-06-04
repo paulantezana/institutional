@@ -1,7 +1,6 @@
 package certificacion
 
 import (
-	"github.com/jinzhu/gorm"
 	"time"
 )
 

@@ -11,12 +11,11 @@ type Semestre struct {
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
-	Nombre    string     `json:"nombre" gorm:"not null"`
-	Year      int32      `json:"year"`
+	Nombre    string     `json:"nombre" gorm:"type:varchar(128); not null"`
+	Year      uint16     `json:"year" gorm:"not null"`
 	Estado    bool       `json:"estado" gorm:"default:'true'"`
-
-	CarreraID uint     `json:"carrera_id"`
-	Modulos   []Modulo `json:"modulos,omitempty"`
+	CarreraID uint       `json:"carrera_id"`
+	Modulos   []Modulo   `json:"modulos,omitempty"`
 }
 
 // Database custom table name
@@ -35,6 +34,7 @@ var SemestreType = graphql.NewObject(
 			"deleted_at": &graphql.Field{Type: graphql.DateTime},
 			"nombre":     &graphql.Field{Type: graphql.String},
 			"year":       &graphql.Field{Type: graphql.Int},
+			"carrera_id": &graphql.Field{Type: graphql.Int},
 			"estado":     &graphql.Field{Type: graphql.Boolean},
 		},
 	},
