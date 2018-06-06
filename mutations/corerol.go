@@ -6,14 +6,14 @@ import (
     "github.com/paulantezana/institutional/config"
 )
 
-func CreateProfesorMutation() *graphql.Field  {
+func CreateCoreRolMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CoreRolType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            rol := models.CoreRol{
 
             }
 
@@ -22,23 +22,23 @@ func CreateProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&rol).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return rol, nil
         },
     }
 }
 
-func UpdateProfesorMutation() *graphql.Field  {
+func UpdateCoreRolMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CoreRolType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            rol := models.CoreRol{
 
             }
 
@@ -47,23 +47,23 @@ func UpdateProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&rol).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return rol, nil
         },
     }
 }
 
-func DeleteProfesorMutation() *graphql.Field  {
+func DeleteCoreRolMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CoreRolType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            rol := models.CoreRol{
 
             }
 
@@ -72,11 +72,11 @@ func DeleteProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&rol).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return rol, nil
         },
     }
 }

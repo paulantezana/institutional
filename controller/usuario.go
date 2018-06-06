@@ -6,9 +6,9 @@ import (
 	"github.com/labstack/echo"
 	"github.com/paulantezana/institutional/config"
 	"github.com/paulantezana/institutional/helpers"
+	"github.com/paulantezana/institutional/models"
 	"github.com/paulantezana/institutional/security"
 	"net/http"
-    "github.com/paulantezana/institutional/models"
 )
 
 func Login(c echo.Context) error {

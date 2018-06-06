@@ -3,10 +3,10 @@ package queries
 import (
 	"github.com/graphql-go/graphql"
 	"github.com/paulantezana/institutional/config"
-    "github.com/paulantezana/institutional/models"
+	"github.com/paulantezana/institutional/models"
 )
 
-func GetUnidadQuery() *graphql.Field {
+func UnidadQuery() *graphql.Field {
 	return &graphql.Field{
 		Type: graphql.NewList(models.UnidadType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {

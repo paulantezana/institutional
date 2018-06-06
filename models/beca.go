@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/graphql-go/graphql"
 	"time"
 )
 
@@ -18,3 +19,15 @@ type Beca struct {
 func (Beca) TableName() string {
 	return "becas"
 }
+
+var BecaType = graphql.NewObject(
+	graphql.ObjectConfig{
+		Name: "",
+		Fields: graphql.Fields{
+			"id":         &graphql.Field{Type: graphql.Int},
+			"created_at": &graphql.Field{Type: graphql.DateTime},
+			"updated_at": &graphql.Field{Type: graphql.DateTime},
+			"deleted_at": &graphql.Field{Type: graphql.DateTime},
+		},
+	},
+)

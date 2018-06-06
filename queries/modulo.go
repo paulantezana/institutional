@@ -3,10 +3,10 @@ package queries
 import (
 	"github.com/graphql-go/graphql"
 	"github.com/paulantezana/institutional/config"
-    "github.com/paulantezana/institutional/models"
+	"github.com/paulantezana/institutional/models"
 )
 
-func GetModuloQuery() *graphql.Field {
+func ModuloQuery() *graphql.Field {
 	return &graphql.Field{
 		Type: graphql.NewList(models.ModuloType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {

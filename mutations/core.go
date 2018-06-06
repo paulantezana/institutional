@@ -6,14 +6,14 @@ import (
     "github.com/paulantezana/institutional/config"
 )
 
-func CreateProfesorMutation() *graphql.Field  {
+func CreateCoreMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CoreMenuType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            core := models.CoreMenu{
 
             }
 
@@ -22,23 +22,23 @@ func CreateProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&core).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return core, nil
         },
     }
 }
 
-func UpdateProfesorMutation() *graphql.Field  {
+func UpdateCoreMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CoreMenuType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            core := models.CoreMenu{
 
             }
 
@@ -47,23 +47,23 @@ func UpdateProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&core).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return core, nil
         },
     }
 }
 
-func DeleteProfesorMutation() *graphql.Field  {
+func DeleteCoreMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CoreMenuType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            core := models.CoreMenu{
 
             }
 
@@ -72,11 +72,11 @@ func DeleteProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&core).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return core, nil
         },
     }
 }

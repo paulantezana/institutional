@@ -3,8 +3,8 @@ package controller
 import (
 	"github.com/labstack/echo"
 	"github.com/paulantezana/institutional/config"
+	"github.com/paulantezana/institutional/models"
 	"net/http"
-    "github.com/paulantezana/institutional/models"
 )
 
 func GetCarreras(c echo.Context) error {

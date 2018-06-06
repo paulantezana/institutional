@@ -2,7 +2,7 @@ package security
 
 import (
 	"github.com/dgrijalva/jwt-go"
-    "github.com/paulantezana/institutional/models"
+	"github.com/paulantezana/institutional/models"
 )
 
 type Claim struct {

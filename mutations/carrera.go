@@ -3,7 +3,7 @@ package mutations
 import (
 	"github.com/graphql-go/graphql"
 	"github.com/paulantezana/institutional/config"
-    "github.com/paulantezana/institutional/models"
+	"github.com/paulantezana/institutional/models"
 )
 
 func CreateCarreraMutation() *graphql.Field {

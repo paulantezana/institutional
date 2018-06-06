@@ -6,7 +6,7 @@ import (
 	"github.com/paulantezana/institutional/models"
 )
 
-func GetUsuarioQuery() *graphql.Field {
+func UsuarioQuery() *graphql.Field {
 	return &graphql.Field{
 		Type: graphql.NewList(models.UsuarioType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {

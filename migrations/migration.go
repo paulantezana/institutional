@@ -2,7 +2,7 @@ package migrations
 
 import (
 	"github.com/paulantezana/institutional/config"
-    "github.com/paulantezana/institutional/models"
+	"github.com/paulantezana/institutional/models"
 )
 
 // Migrate function
@@ -49,9 +49,16 @@ func Migrate() {
 		&models.Prestamo{},
 	)
 
-	db.Model(&models.Filial{}).AddForeignKey("instituto_id", "institutos(id)", "RESTRICT", "RESTRICT")
-	db.Model(&models.Carrera{}).AddForeignKey("filial_id", "filiales(id)", "RESTRICT", "RESTRICT")
-	db.Model(&models.Semestre{}).AddForeignKey("carrera_id", "carreras(id)", "RESTRICT", "RESTRICT")
-	db.Model(&models.Modulo{}).AddForeignKey("semestre_id", "semestres(id)", "RESTRICT", "RESTRICT")
-	db.Model(&models.Unidad{}).AddForeignKey("modulo_id", "modulos(id)", "RESTRICT", "RESTRICT")
+	//db.Model(&models.Filial{}).AddForeignKey("instituto_id", "institutos(id)", "RESTRICT", "RESTRICT")
+	//db.Model(&models.Carrera{}).AddForeignKey("filial_id", "filiales(id)", "RESTRICT", "RESTRICT")
+	//db.Model(&models.Semestre{}).AddForeignKey("carrera_id", "carreras(id)", "RESTRICT", "RESTRICT")
+	//db.Model(&models.Modulo{}).AddForeignKey("semestre_id", "semestres(id)", "RESTRICT", "RESTRICT")
+	//db.Model(&models.Unidad{}).AddForeignKey("modulo_id", "modulos(id)", "RESTRICT", "RESTRICT")
+	//
+	//db.Model(&models.CorePermit{}).AddForeignKey("core_sub_menu_id","core_modulos(id)","RESTRICT", "RESTRICT")
+    //db.Model(&models.CoreSubMenu{}).AddForeignKey("core_menu_id","core_menus(id)","RESTRICT", "RESTRICT")
+    //db.Model(&models.CoreMenu{}).AddForeignKey("core_rol_id","core_roles(id)","RESTRICT", "RESTRICT")
+    //db.Model(&models.CoreModulo{}).AddForeignKey("core_rol_id","core_roles(id)","RESTRICT", "RESTRICT")
+	//
+    //db.Model(&models.Usuario{}).AddForeignKey("core_rol_id","core_roles(id)","RESTRICT", "RESTRICT")
 }

@@ -6,14 +6,14 @@ import (
     "github.com/paulantezana/institutional/config"
 )
 
-func CreateProfesorMutation() *graphql.Field  {
+func CreateCorePermitMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CorePermitType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            permit := models.CorePermit{
 
             }
 
@@ -22,23 +22,23 @@ func CreateProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&permit).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return permit, nil
         },
     }
 }
 
-func UpdateProfesorMutation() *graphql.Field  {
+func UpdateCorePermitMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CorePermitType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            permit := models.CorePermit{
 
             }
 
@@ -47,23 +47,23 @@ func UpdateProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&permit).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return permit, nil
         },
     }
 }
 
-func DeleteProfesorMutation() *graphql.Field  {
+func DeleteCorePermitMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CorePermitType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            permit := models.CorePermit{
 
             }
 
@@ -72,11 +72,11 @@ func DeleteProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&permit).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return permit, nil
         },
     }
 }

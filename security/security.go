@@ -2,9 +2,9 @@ package security
 
 import (
 	"github.com/dgrijalva/jwt-go"
+	"github.com/paulantezana/institutional/models"
 	"log"
 	"time"
-    "github.com/paulantezana/institutional/models"
 )
 
 // GenerateJWT generate token custom claims

@@ -1,19 +1,19 @@
 package mutations
 
 import (
-    "github.com/paulantezana/institutional/models"
     "github.com/graphql-go/graphql"
+    "github.com/paulantezana/institutional/models"
     "github.com/paulantezana/institutional/config"
 )
 
-func CreateProfesorMutation() *graphql.Field  {
+func CreateCoreSubMenuMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CoreSubMenuType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            submenu := models.CoreSubMenu{
 
             }
 
@@ -22,23 +22,23 @@ func CreateProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&submenu).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return submenu, nil
         },
     }
 }
 
-func UpdateProfesorMutation() *graphql.Field  {
+func UpdateCoreSubMenuMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CoreSubMenuType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            submenu := models.CoreSubMenu{
 
             }
 
@@ -47,23 +47,23 @@ func UpdateProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&submenu).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return submenu, nil
         },
     }
 }
 
-func DeleteProfesorMutation() *graphql.Field  {
+func DeleteCoreSubMenuMutation() *graphql.Field  {
     return &graphql.Field{
-        Type: models.ProfesorType,
+        Type: models.CoreSubMenuType,
         Args: graphql.FieldConfigArgument{
 
         },
         Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            profesor := models.Profesor{
+            submenu := models.CoreSubMenu{
 
             }
 
@@ -72,11 +72,11 @@ func DeleteProfesorMutation() *graphql.Field  {
             defer db.Close()
 
             // Execute operations
-            if err := db.Create(&profesor).Error; err != nil {
+            if err := db.Create(&submenu).Error; err != nil {
                 return nil, err
             }
 
-            return profesor, nil
+            return submenu, nil
         },
     }
 }
