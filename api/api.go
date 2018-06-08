@@ -18,7 +18,7 @@ func Start() {
 	// Este midelware indica desde que
 	// ips o nombres de dominio se consumiran la api
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:7070", "http://localhost:3005", "http://localhost"},
+		AllowOrigins: []string{"http://localhost:7070", "http://localhost:3005", "http://localhost:3004", "http://localhost"},
 		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
 	}))
 

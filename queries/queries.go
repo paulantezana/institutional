@@ -4,23 +4,24 @@ import "github.com/graphql-go/graphql"
 
 func GetRootFields() graphql.Fields {
 	return graphql.Fields{
-		"Instituto": InstitutoQuery(),
-		"Filial":    FilialQuery(),
-		"Carrera":   CarreraQuery(),
-		"Semestre":  SemestreQuery(),
-		"Modulo":    ModuloQuery(),
-		"Unidad":    UnidadQuery(),
+		"Institutos": InstitutoQuery(),
+		"Filiales":   FilialQuery(),
+		"Carreras":   CarreraQuery(),
+		"Semestres":  SemestreQuery(),
+		"Modulos":    ModuloQuery(),
+		"Unidades":   UnidadQuery(),
 
-		"Core":        CoreQuery(),
-		"CoreRol":     CoreRolQuery(),
-		"CoreMoudulo": CoreModuloQuery(),
-		"CoreMenu":    CoreMenuQuery(),
-		"CoreSubMenu": CoreSubMenuQuery(),
-		"CorePermit":  CorePermitQuery(),
+		"Core":         CoreQuery(),
+		"CoreRol":      CoreRolQuery(),
+		"CoreMoudulos": CoreModuloQuery(),
+		"CoreMenus":    CoreMenuQuery(),
+		"CoreSubMenus": CoreSubMenuQuery(),
+		"CorePermits":  CorePermitQuery(),
 
-		"Usuario":  UsuarioQuery(),
-		"Alumno":   AlumnoQuery(),
-		"Profesor": ProfesorQuery(),
-		"Personal": PersonalQuery(),
+		"Login": LoginQuery(),
+		"Usuarios":   UsuarioQuery(),
+		"Alumnos":    AlumnoQuery(),
+		"Profesores": ProfesorQuery(),
+		"Personales": PersonalQuery(),
 	}
 }
