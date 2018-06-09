@@ -40,7 +40,7 @@ func Start() {
 	httpHandler := handler.New(&handler.Config{
 		Schema: &Schema,
 		Pretty: true,
-		//GraphiQL: true,
+		GraphiQL: true,
 	})
 
 	gql := e.Group("/graphql")

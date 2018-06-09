@@ -30,13 +30,11 @@ func LoginQuery() *graphql.Field {
 		Args: graphql.FieldConfigArgument{
 		    "usuario": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
 		    "clave": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
-            "clave_recuperar": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
         },
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			user := models.Usuario{
 				Usuario: p.Args["nombre"].(string),
 				Clave: p.Args["clave"].(string),
-				ConfirmarClave: p.Args["clave_recuperar"].(string),
 			}
 		
 			// Get connection database
