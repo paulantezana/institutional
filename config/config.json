@@ -1,7 +1,7 @@
 {
     "server"   : "localhost",
     "port"     : "5432",
-    "user"     : "paul",
+    "user"     : "yoel",
     "pass"     : "cascadesheet",
     "database" : "institutional"
 }

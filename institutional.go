@@ -9,6 +9,7 @@ import (
     "fmt"
     "time"
     "github.com/labstack/gommon/log"
+    "github.com/mnmtanish/go-graphiql"
 )
 
 func main() {
@@ -50,6 +51,7 @@ func main() {
 
     // Handle functions
     mux.Handle("/graphql", h)
+    mux.HandleFunc("/graphiql",graphiql.ServeGraphiQL)
 
     // Config server
     server := &http.Server{
