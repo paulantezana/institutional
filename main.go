@@ -55,6 +55,7 @@ func main() {
     mux.HandleFunc("/graphiql",graphiql.ServeGraphiQL)
 
 
+    // Custom port
     port := os.Getenv("POST")
     if port == "" {
         port = "7070"

@@ -1,8 +1,7 @@
 {
     "ImportPath": "institutional",
-    "GoVersion": "go1.10.3",
+    "GoVersion": "go1.9.2",
     "Packages": [
         "./..."
-    ],
-    "Deps": []
+    ]
 }
