@@ -25,14 +25,19 @@
                         <p>Servidor GraphQL desarrollado en el lenguaje de programación golang con autenticación de jwt, que podrá ser consumido con cualquier cliente graphql (web, escritorio, móvil, etc.)</p>
                         <div class="btn-group">
                             <a href="https://github.com/paulantezana/institutional" target="_blank" class="btn btn-white">github</a>
-                            <div class="server-link"><code>http://localhost:7070/graphql</code></div>
-                            <a href="http://localhost:7070/graphiql" class="btn btn-purple">graphiql</a>
+                            <div class="server-link"><code id="server-content">directory</code></div>
+                            <a href="/graphiql" class="btn btn-purple">graphiql</a>
                         </div>
                     </article>
                 </div>
             </div>
         </main>
         <footer class="footer"></footer>
+        <script>
+            let content = document.getElementById("server-content");
+            let host = `${document.location.protocol}//${document.location.hostname}:${document.location.port}/graphql`;
+            content.innerHTML = host;
+        </script>
     </div>
 </body>
 </html>
