@@ -10,6 +10,7 @@ import (
     "time"
     "github.com/labstack/gommon/log"
     "github.com/mnmtanish/go-graphiql"
+    "os"
 )
 
 func main() {
@@ -53,9 +54,14 @@ func main() {
     mux.Handle("/graphql", h)
     mux.HandleFunc("/graphiql",graphiql.ServeGraphiQL)
 
+
+    port := os.Getenv("POST")
+    if port == "" {
+        port = "7070"
+    }
     // Config server
     server := &http.Server{
-        Addr: ":7070",
+        Addr: ":" + port,
         Handler: mux,
         ReadTimeout: 10 * time.Second,
         WriteTimeout: 10 * time.Second,
