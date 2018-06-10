@@ -56,7 +56,7 @@ func main() {
 
 
     // Custom port
-    port := os.Getenv("POST")
+    port := os.Getenv("PORT")
     if port == "" {
         port = "7070"
     }
