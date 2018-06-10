@@ -31,11 +31,15 @@
                     </article>
                 </div>
             </div>
+            <div class="sn-video">
+                <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/ud1fWXACWm0?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
         </main>
         <footer class="footer"></footer>
         <script>
             let content = document.getElementById("server-content");
-            let host = `${document.location.protocol}//${document.location.hostname}:${document.location.port}/graphql`;
+            let port = (document.location.port !== "") ? `:${document.location.port}` : "";
+            let host = `${document.location.protocol}//${document.location.hostname + port}/graphql`;
             content.innerHTML = host;
         </script>
     </div>
