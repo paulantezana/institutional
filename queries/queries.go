@@ -11,7 +11,7 @@ func GetRootFields() graphql.Fields {
 		"Modulos":    ModuloQuery(),
 		"Unidades":   UnidadQuery(),
 
-		"Core":         CoreQuery(),
+		//"Core":         CoreQuery(),
 		"CoreRol":      CoreRolQuery(),
 		"CoreMoudulos": CoreModuloQuery(),
 		"CoreMenus":    CoreMenuQuery(),
