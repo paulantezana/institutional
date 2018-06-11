@@ -38,8 +38,8 @@ func GetConfig() Config {
 
 // GetConnection get connection database
 func GetConnection() *gorm.DB {
-	c := GetConfig()
-	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", c.User, c.Pass, c.Server, c.Port, c.Database)
+	//c := GetConfig()
+	dsn := fmt.Sprintf("postgres://drvzldhzlyrtra:8a6a02fa8d55a65d5a370330d51b211aef066343e37d968eeb6a46527ba6ee48@ec2-54-225-107-174.compute-1.amazonaws.com:5432/d3mp2040aqlpme")
 
 	db, err := gorm.Open("postgres", dsn)
 	if err != nil {
