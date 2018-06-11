@@ -35,8 +35,8 @@ var UnidadType = graphql.NewObject(
 			"nombre":     &graphql.Field{Type: graphql.String},
 			"credito":    &graphql.Field{Type: graphql.Float},
 			"horas":      &graphql.Field{Type: graphql.Int},
-			"modulo_id":  &graphql.Field{Type: graphql.Int},
 			"estado":     &graphql.Field{Type: graphql.Boolean},
+			"modulo_id":  &graphql.Field{Type: graphql.Int},
 		},
 	},
 )

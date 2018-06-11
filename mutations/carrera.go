@@ -65,3 +65,28 @@ func UpdateCarreraMutation() *graphql.Field {
 		},
 	}
 }
+
+func DeleteCarreraMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.CarreraType,
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			filial := models.Carrera{
+				ID: uint(p.Args["id"].(int)),
+			}
+
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
+
+			// Execute operations
+			if err := db.Delete(&filial).Error; err != nil {
+				return nil, err
+			}
+
+			return filial, nil
+		},
+	}
+}

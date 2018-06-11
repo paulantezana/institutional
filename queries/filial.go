@@ -8,7 +8,7 @@ import (
 
 func FilialQuery() *graphql.Field {
 	return &graphql.Field{
-		Type: graphql.NewList(models.CarreraType),
+		Type: graphql.NewList(models.FilialType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			db := config.GetConnection()
 			defer db.Close()

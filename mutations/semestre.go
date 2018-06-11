@@ -1,82 +1,70 @@
 package mutations
 
 import (
-    "github.com/graphql-go/graphql"
-    "github.com/paulantezana/institutional/models"
-    "github.com/paulantezana/institutional/config"
+	"github.com/graphql-go/graphql"
+	"github.com/paulantezana/institutional/config"
+	"github.com/paulantezana/institutional/models"
 )
 
-func CreateSemestreMutation() *graphql.Field  {
-    return &graphql.Field{
-        Type: models.SemestreType,
-        Args: graphql.FieldConfigArgument{
+func CreateSemestreMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.SemestreType,
+		Args: graphql.FieldConfigArgument{},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			semestre := models.Semestre{}
 
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            semestre := models.Semestre{
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            }
+			// Execute operations
+			if err := db.Create(&semestre).Error; err != nil {
+				return nil, err
+			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Execute operations
-            if err := db.Create(&semestre).Error; err != nil {
-                return nil, err
-            }
-
-            return semestre, nil
-        },
-    }
+			return semestre, nil
+		},
+	}
 }
 
-func UpdateSemestreMutation() *graphql.Field  {
-    return &graphql.Field{
-        Type: models.SemestreType,
-        Args: graphql.FieldConfigArgument{
+func UpdateSemestreMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.SemestreType,
+		Args: graphql.FieldConfigArgument{},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			semestre := models.Semestre{}
 
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            semestre := models.Semestre{
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            }
+			// Execute operations
+			if err := db.Create(&semestre).Error; err != nil {
+				return nil, err
+			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Execute operations
-            if err := db.Create(&semestre).Error; err != nil {
-                return nil, err
-            }
-
-            return semestre, nil
-        },
-    }
+			return semestre, nil
+		},
+	}
 }
 
-func DeleteSemestreMutation() *graphql.Field  {
-    return &graphql.Field{
-        Type: models.SemestreType,
-        Args: graphql.FieldConfigArgument{
+func DeleteSemestreMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.SemestreType,
+		Args: graphql.FieldConfigArgument{},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			semestre := models.Semestre{}
 
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            semestre := models.Semestre{
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            }
+			// Execute operations
+			if err := db.Create(&semestre).Error; err != nil {
+				return nil, err
+			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Execute operations
-            if err := db.Create(&semestre).Error; err != nil {
-                return nil, err
-            }
-
-            return semestre, nil
-        },
-    }
+			return semestre, nil
+		},
+	}
 }

@@ -18,7 +18,7 @@ type CoreModulo struct {
 	Style       string     `json:"style"`
 	Script      string     `json:"script"`
 	Config      string     `json:"config"`
-    CoreRolID  uint       `json:"core_rol_id"`
+	CoreRolID   uint       `json:"core_rol_id"`
 	Estado      bool       `json:"estado" gorm:"default:'true'"`
 }
 
@@ -43,7 +43,7 @@ var CoreModuloType = graphql.NewObject(
 			"style":       &graphql.Field{Type: graphql.String},
 			"script":      &graphql.Field{Type: graphql.String},
 			"config":      &graphql.Field{Type: graphql.String},
-            "core_rol_id":      &graphql.Field{Type: graphql.Int},
+			"core_rol_id": &graphql.Field{Type: graphql.Int},
 			"estado":      &graphql.Field{Type: graphql.Boolean},
 		},
 	},

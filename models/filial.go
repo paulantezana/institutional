@@ -66,7 +66,7 @@ var FilialType = graphql.NewObject(
 			"resolucion_revalidacion_fecha":  &graphql.Field{Type: graphql.DateTime},
 			"instituto_id":                   &graphql.Field{Type: graphql.Int},
 			"estado":                         &graphql.Field{Type: graphql.Boolean},
-            "carreras":                         &graphql.Field{Type: graphql.NewList(CarreraType)},
+			"carreras":                       &graphql.Field{Type: graphql.NewList(CarreraType)},
 		},
 	},
 )

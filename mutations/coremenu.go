@@ -1,82 +1,70 @@
 package mutations
 
 import (
-    "github.com/paulantezana/institutional/models"
-    "github.com/graphql-go/graphql"
-    "github.com/paulantezana/institutional/config"
+	"github.com/graphql-go/graphql"
+	"github.com/paulantezana/institutional/config"
+	"github.com/paulantezana/institutional/models"
 )
 
-func CreateCoreMenuMutation() *graphql.Field  {
-    return &graphql.Field{
-        Type: models.CoreMenuType,
-        Args: graphql.FieldConfigArgument{
+func CreateCoreMenuMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.CoreMenuType,
+		Args: graphql.FieldConfigArgument{},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			menu := models.CoreMenu{}
 
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            menu := models.CoreMenu{
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            }
+			// Execute operations
+			if err := db.Create(&menu).Error; err != nil {
+				return nil, err
+			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Execute operations
-            if err := db.Create(&menu).Error; err != nil {
-                return nil, err
-            }
-
-            return menu, nil
-        },
-    }
+			return menu, nil
+		},
+	}
 }
 
-func UpdateCoreMenuMutation() *graphql.Field  {
-    return &graphql.Field{
-        Type: models.CoreMenuType,
-        Args: graphql.FieldConfigArgument{
+func UpdateCoreMenuMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.CoreMenuType,
+		Args: graphql.FieldConfigArgument{},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			menu := models.CoreMenu{}
 
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            menu := models.CoreMenu{
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            }
+			// Execute operations
+			if err := db.Create(&menu).Error; err != nil {
+				return nil, err
+			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Execute operations
-            if err := db.Create(&menu).Error; err != nil {
-                return nil, err
-            }
-
-            return menu, nil
-        },
-    }
+			return menu, nil
+		},
+	}
 }
 
-func DeleteCoreMenuMutation() *graphql.Field  {
-    return &graphql.Field{
-        Type: models.CoreMenuType,
-        Args: graphql.FieldConfigArgument{
+func DeleteCoreMenuMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.CoreMenuType,
+		Args: graphql.FieldConfigArgument{},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			menu := models.CoreMenu{}
 
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            menu := models.CoreMenu{
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            }
+			// Execute operations
+			if err := db.Create(&menu).Error; err != nil {
+				return nil, err
+			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Execute operations
-            if err := db.Create(&menu).Error; err != nil {
-                return nil, err
-            }
-
-            return menu, nil
-        },
-    }
+			return menu, nil
+		},
+	}
 }

@@ -40,7 +40,7 @@ var CarreraType = graphql.NewObject(
 			"creacion":    &graphql.Field{Type: graphql.Int},
 			"filial_id":   &graphql.Field{Type: graphql.Int},
 			"estado":      &graphql.Field{Type: graphql.Boolean},
-            "semestres":      &graphql.Field{Type: graphql.NewList(SemestreType)},
+			"semestres":   &graphql.Field{Type: graphql.NewList(SemestreType)},
 		},
 	},
 )

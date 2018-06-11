@@ -1,82 +1,70 @@
 package mutations
 
 import (
-    "github.com/graphql-go/graphql"
-    "github.com/paulantezana/institutional/models"
-    "github.com/paulantezana/institutional/config"
+	"github.com/graphql-go/graphql"
+	"github.com/paulantezana/institutional/config"
+	"github.com/paulantezana/institutional/models"
 )
 
-func CreateUsuarioMutation() *graphql.Field  {
-    return &graphql.Field{
-        Type: models.UsuarioType,
-        Args: graphql.FieldConfigArgument{
+func CreateUsuarioMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.UsuarioType,
+		Args: graphql.FieldConfigArgument{},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			usuario := models.Usuario{}
 
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            usuario := models.Usuario{
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            }
+			// Execute operations
+			if err := db.Create(&usuario).Error; err != nil {
+				return nil, err
+			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Execute operations
-            if err := db.Create(&usuario).Error; err != nil {
-                return nil, err
-            }
-
-            return usuario, nil
-        },
-    }
+			return usuario, nil
+		},
+	}
 }
 
-func UpdateUsuarioMutation() *graphql.Field  {
-    return &graphql.Field{
-        Type: models.UsuarioType,
-        Args: graphql.FieldConfigArgument{
+func UpdateUsuarioMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.UsuarioType,
+		Args: graphql.FieldConfigArgument{},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			usuario := models.Usuario{}
 
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            usuario := models.Usuario{
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            }
+			// Execute operations
+			if err := db.Create(&usuario).Error; err != nil {
+				return nil, err
+			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Execute operations
-            if err := db.Create(&usuario).Error; err != nil {
-                return nil, err
-            }
-
-            return usuario, nil
-        },
-    }
+			return usuario, nil
+		},
+	}
 }
 
-func DeleteUsuarioMutation() *graphql.Field  {
-    return &graphql.Field{
-        Type: models.UsuarioType,
-        Args: graphql.FieldConfigArgument{
+func DeleteUsuarioMutation() *graphql.Field {
+	return &graphql.Field{
+		Type: models.UsuarioType,
+		Args: graphql.FieldConfigArgument{},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			usuario := models.Usuario{}
 
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            usuario := models.Usuario{
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            }
+			// Execute operations
+			if err := db.Create(&usuario).Error; err != nil {
+				return nil, err
+			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Execute operations
-            if err := db.Create(&usuario).Error; err != nil {
-                return nil, err
-            }
-
-            return usuario, nil
-        },
-    }
+			return usuario, nil
+		},
+	}
 }

@@ -36,7 +36,7 @@ var SemestreType = graphql.NewObject(
 			"year":       &graphql.Field{Type: graphql.Int},
 			"carrera_id": &graphql.Field{Type: graphql.Int},
 			"estado":     &graphql.Field{Type: graphql.Boolean},
-            "modulos":     &graphql.Field{Type: graphql.NewList(ModuloType)},
+			"modulos":    &graphql.Field{Type: graphql.NewList(ModuloType)},
 		},
 	},
 )
