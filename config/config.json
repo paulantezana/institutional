@@ -1,26 +1,12 @@
-//{
-//    "Database" : {
-//        "server"   : "localhost",
-//        "port"     : "5432",
-//        "user"     : "yoel",
-//        "pass"     : "cascadesheet",
-//        "database" : "institutional"
-//    },
-//    "Mode": {
-//        "Dev" : true
-//    }
-//}
-//
-
 {
     "Database" : {
-        "server"   : "ec2-54-225-107-174.compute-1.amazonaws.com",
+        "server"   : "localhost",
         "port"     : "5432",
-        "user"     : "drvzldhzlyrtra",
-        "pass"     : "8a6a02fa8d55a65d5a370330d51b211aef066343e37d968eeb6a46527ba6ee48",
-        "database" : "d3mp2040aqlpme"
+        "user"     : "yoel",
+        "pass"     : "cascadesheet",
+        "database" : "institutional"
     },
     "Mode": {
-        "Dev" : false
+        "dev" : false
     }
 }
