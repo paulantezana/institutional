@@ -16,9 +16,9 @@ import (
 
 func main() {
     // Migration database
-    //fmt.Println("Init migration")
+    fmt.Println("Init migration")
     migrations.Migrate()
-    //fmt.Println("Finalize migration")
+    fmt.Println("Finalize migration")
 
     // root mutation
     rootMutation := graphql.NewObject(graphql.ObjectConfig{
