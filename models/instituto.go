@@ -43,6 +43,7 @@ var InstitutoType = graphql.NewObject(
 			"semestre_prefijo": &graphql.Field{Type: graphql.String},
 			"semestres":        &graphql.Field{Type: graphql.Int},
 			"semestre_sufijo":  &graphql.Field{Type: graphql.String},
+            "filiales":  &graphql.Field{Type: graphql.NewList(FilialType)},
 		},
 	},
 )

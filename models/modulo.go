@@ -38,6 +38,7 @@ var ModuloType = graphql.NewObject(
 			"descripcion": &graphql.Field{Type: graphql.String},
 			"semestre_id": &graphql.Field{Type: graphql.Int},
 			"estado":      &graphql.Field{Type: graphql.Boolean},
+            "unidades":      &graphql.Field{Type: graphql.NewList(UnidadType)},
 		},
 	},
 )

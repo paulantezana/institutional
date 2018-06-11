@@ -11,9 +11,15 @@ import (
     "github.com/labstack/gommon/log"
     "github.com/mnmtanish/go-graphiql"
     "os"
+    "github.com/paulantezana/institutional/migrations"
 )
 
 func main() {
+    // Migration database
+    fmt.Println("Init migration")
+    migrations.Migrate()
+    fmt.Println("Finalize migration")
+
     // root mutation
     rootMutation := graphql.NewObject(graphql.ObjectConfig{
         Name: "RootMutation",

@@ -10,8 +10,8 @@ type CoreRol struct {
 	CreatedAt   time.Time  `json:"created_at"`
 	UpdatedAt   time.Time  `json:"updated_at"`
 	DeletedAt   *time.Time `json:"deleted_at"`
-	Name        string     `json:"name" gorm:"type:varchar(128), not null"`
-	Description string     `json:"description" `
+	Name        string     `json:"name" gorm:"type:varchar(128); not null"`
+	Description string     `json:"description"`
 	Freeze      bool       `json:"freeze"`
 	Estado      bool       `json:"estado" gorm:"default:'true'"`
 }

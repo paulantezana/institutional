@@ -10,7 +10,7 @@ type CorePermit struct {
 	CreatedAt     time.Time  `json:"created_at"`
 	UpdatedAt     time.Time  `json:"updated_at"`
 	DeletedAt     *time.Time `json:"deleted_at"`
-	Name          string     `json:"name" gorm:"type:varchar(128), not null"`
+	Name          string     `json:"name" gorm:"type:varchar(128); not null"`
 	CoreSubMenuID uint       `json:"core_sub_menu_id"`
 	CarreraID     uint       `json:"carrera_id"`
 	SemestreID    uint       `json:"semestre_id"`
