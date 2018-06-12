@@ -12,9 +12,11 @@ type Usuario struct {
 	CreatedAt              time.Time  `json:"created_at"`
 	UpdatedAt              time.Time  `json:"updated_at"`
 	DeletedAt              *time.Time `json:"deleted_at"`
-	Usuario                string     `json:"usuario"`
+	Usuario                string     `json:"usuario" gorm:"type:varchar(64); unique"`
+	Correo                 string     `json:"correo" gorm:"type:varchar(64); unique"`
 	Clave                  string     `json:"clave"`
 	ConfirmarClave         string     `json:"confirmar_clave,omitempty" gorm:"-"`
+	ClaveAntigua           string     `json:"clave_antigua,omitempty" gorm:"-"`
 	ClaveRecuperar         string     `json:"clave_recuperar"`
 	FechaModificacionClave time.Time  `json:"fecha_modificacion_clave"`
 	Estado                 bool       `json:"estado" gorm:"default:'true'"`
@@ -37,6 +39,7 @@ var UsuarioType = graphql.NewObject(
 			"updated_at":               &graphql.Field{Type: graphql.DateTime},
 			"deleted_at":               &graphql.Field{Type: graphql.DateTime},
 			"usuario":                  &graphql.Field{Type: graphql.String},
+			"correo":                   &graphql.Field{Type: graphql.String},
 			"clave":                    &graphql.Field{Type: graphql.String},
 			"clave_recuperar":          &graphql.Field{Type: graphql.String},
 			"fecha_modificacion_clave": &graphql.Field{Type: graphql.DateTime},

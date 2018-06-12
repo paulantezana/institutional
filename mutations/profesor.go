@@ -4,6 +4,8 @@ import (
 	"github.com/graphql-go/graphql"
 	"github.com/paulantezana/institutional/config"
 	"github.com/paulantezana/institutional/models"
+    "errors"
+    "fmt"
 )
 
 func CreateProfesorMutation() *graphql.Field {
@@ -12,6 +14,8 @@ func CreateProfesorMutation() *graphql.Field {
 		Args: graphql.FieldConfigArgument{},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			profesor := models.Profesor{}
+
+            // Optional arguments
 
 			// get connection
 			db := config.GetConnection()
@@ -30,7 +34,9 @@ func CreateProfesorMutation() *graphql.Field {
 func UpdateProfesorMutation() *graphql.Field {
 	return &graphql.Field{
 		Type: models.ProfesorType,
-		Args: graphql.FieldConfigArgument{},
+		Args: graphql.FieldConfigArgument{
+            "id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
+        },
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			profesor := models.Profesor{}
 
@@ -38,8 +44,14 @@ func UpdateProfesorMutation() *graphql.Field {
 			db := config.GetConnection()
 			defer db.Close()
 
+            if db.First(&profesor).RecordNotFound() {
+                return nil, errors.New(fmt.Sprintf("The record with the id %d was not found",profesor.ID))
+            }
+
+            // Optional arguments
+
 			// Execute operations
-			if err := db.Create(&profesor).Error; err != nil {
+			if err := db.Model(&profesor).Update(profesor).Error; err != nil {
 				return nil, err
 			}
 
@@ -51,7 +63,9 @@ func UpdateProfesorMutation() *graphql.Field {
 func DeleteProfesorMutation() *graphql.Field {
 	return &graphql.Field{
 		Type: models.ProfesorType,
-		Args: graphql.FieldConfigArgument{},
+		Args: graphql.FieldConfigArgument{
+            "id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
+        },
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			profesor := models.Profesor{}
 
@@ -59,8 +73,12 @@ func DeleteProfesorMutation() *graphql.Field {
 			db := config.GetConnection()
 			defer db.Close()
 
+            if db.First(&profesor).RecordNotFound() {
+                return nil, errors.New(fmt.Sprintf("The record with the id %d was not found",profesor.ID))
+            }
+
 			// Execute operations
-			if err := db.Create(&profesor).Error; err != nil {
+			if err := db.Delete(&profesor).Error; err != nil {
 				return nil, err
 			}
 

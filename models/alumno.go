@@ -22,7 +22,6 @@ type Alumno struct {
 	Direccion       string     `json:"direccion" gorm:"type:varchar(128);"`
 	Celular         string     `json:"celular" gorm:"type:varchar(16); unique"`
 	Telefono        string     `json:"telefono" gorm:"type:varchar(16); unique"`
-	Correo          string     `json:"correo" gorm:"type:varchar(64); unique"`
 	EstadoCivil     string     `json:"estado_civil" gorm:"type:varchar(64)"`
 	Foto            string     `json:"foto"`
 	FechaAdmicion   time.Time  `json:"fecha_admicion"`

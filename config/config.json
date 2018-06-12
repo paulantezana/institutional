@@ -7,6 +7,6 @@
         "database" : "institutional"
     },
     "Mode": {
-        "dev" : false
+        "dev" : true
     }
 }

@@ -22,7 +22,6 @@ type Profesor struct {
 	Direccion        string     `json:"direccion" gorm:"type:varchar(128);"`
 	Celular          string     `json:"celular" gorm:"type:varchar(16); unique"`
 	Telefono         string     `json:"telefono" gorm:"type:varchar(16); unique"`
-	Correo           string     `json:"correo" gorm:"type:varchar(64); unique"`
 	EstadoCivil      string     `json:"estado_civil" gorm:"type:varchar(64)"`
 	Foto             string     `json:"foto"`
 	CondicionLaboral string     `json:"condicion_laboral"`
@@ -62,7 +61,6 @@ var ProfesorType = graphql.NewObject(
 			"direccion":         &graphql.Field{Type: graphql.String},
 			"celular":           &graphql.Field{Type: graphql.String},
 			"telefono":          &graphql.Field{Type: graphql.String},
-			"correo":            &graphql.Field{Type: graphql.String},
 			"estado_civil":      &graphql.Field{Type: graphql.String},
 			"foto":              &graphql.Field{Type: graphql.String},
 			"condicion_laboral": &graphql.Field{Type: graphql.String},
