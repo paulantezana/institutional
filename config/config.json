@@ -7,6 +7,13 @@
         "database" : "institutional"
     },
     "Mode": {
-        "dev" : false
+        "dev" : true
+    },
+    "Email": {
+        "name": "Mucha nota que se nota",
+        "from": "paul.antezana.2@gmail.com",
+        "password": "Mc]-7EEP}vJ{q{P@",
+        "server": "smtp.gmail.com:465",
+        "host": "smtp.gmail.com"
     }
 }

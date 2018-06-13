@@ -20,6 +20,7 @@ func GetRootFields() graphql.Fields {
 
 		"Login":      LoginQuery(),
 		"Usuarios":   UsuarioQuery(),
+		"ConfirmRecoverPassword":ConfirmRecoverPasswordQuery(),
 		"Alumnos":    AlumnoQuery(),
 		"Profesores": ProfesorQuery(),
 		"Personales": PersonalQuery(),

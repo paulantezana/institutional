@@ -8,10 +8,7 @@ import (
     "fmt"
     "time"
     "crypto/sha256"
-    "net/mail"
     "bytes"
-    "net/smtp"
-    "crypto/tls"
     "html/template"
     "log"
 )
@@ -24,8 +21,6 @@ func CreateUsuarioMutation() *graphql.Field {
             "correo":                  &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
             "clave":                    &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
             "confirmar_clave":          &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
-            "clave_recuperar":          &graphql.ArgumentConfig{Type: graphql.String},
-            "fecha_modificacion_clave": &graphql.ArgumentConfig{Type: graphql.DateTime},
             "estado":                   &graphql.ArgumentConfig{Type: graphql.Boolean},
         },
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
@@ -34,16 +29,10 @@ func CreateUsuarioMutation() *graphql.Field {
                 Correo: p.Args["correo"].(string),
                 Clave:   p.Args["clave"].(string),
                 ConfirmarClave:   p.Args["confirmar_clave"].(string),
+                FechaModificacionClave: time.Now(),
             }
 
             // Optional arguments
-            if p.Args["clave_recuperar"] != nil {
-                usuario.FechaModificacionClave = p.Args["clave_recuperar"].(time.Time)
-            }
-
-            if p.Args["fecha_modificacion_clave"] != nil {
-                usuario.FechaModificacionClave = p.Args["fecha_modificacion_clave"].(time.Time)
-            }
             if p.Args["estado"] != nil {
                 usuario.Estado = p.Args["estado"].(bool)
             }
@@ -81,8 +70,6 @@ func UpdateUsuarioMutation() *graphql.Field {
             "clave":                    &graphql.ArgumentConfig{Type: graphql.String},
             "confirmar_clave":          &graphql.ArgumentConfig{Type: graphql.String},
             "clave_antigua":          &graphql.ArgumentConfig{Type: graphql.String},
-            "clave_recuperar":          &graphql.ArgumentConfig{Type: graphql.String},
-            "fecha_modificacion_clave": &graphql.ArgumentConfig{Type: graphql.DateTime},
             "estado":                   &graphql.ArgumentConfig{Type: graphql.Boolean},
         },
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
@@ -105,14 +92,8 @@ func UpdateUsuarioMutation() *graphql.Field {
             if p.Args["correo"] != nil {
                 usuario.Correo = p.Args["correo"].(string)
             }
-            if p.Args["clave_recuperar"] != nil {
-                usuario.ClaveRecuperar = p.Args["clave_recuperar"].(string)
-            }
-            if p.Args["fecha_modificacion_clave"] != nil {
-                usuario.FechaModificacionClave = p.Args["fecha_modificacion_clave"].(time.Time)
-            }
             if p.Args["estado"] != nil {
-                usuario.FechaModificacionClave = p.Args["estado"].(time.Time)
+                usuario.Estado = p.Args["estado"].(bool)
             }
 
             // Change password
@@ -144,6 +125,7 @@ func UpdateUsuarioMutation() *graphql.Field {
                     cc := sha256.Sum256([]byte(usuario.Clave))
                     pwd := fmt.Sprintf("%x", cc)
                     usuario.Clave = pwd
+                    usuario.FechaModificacionClave = time.Now()
                 }
             }
 
@@ -183,7 +165,7 @@ func DeleteUsuarioMutation() *graphql.Field {
 	}
 }
 
-func RecoverPassword() *graphql.Field {
+func RecoverPasswordMutation() *graphql.Field {
     return &graphql.Field {
         Type: models.UsuarioType,
         Args: graphql.FieldConfigArgument{
@@ -199,87 +181,41 @@ func RecoverPassword() *graphql.Field {
             defer db.Close()
 
             // Validations
-            if err := db.First(&usuario).Error; err != nil {
+            if err := db.Where("correo = ?", usuario.Correo).First(&usuario).Error; err != nil {
                 return nil, err
             }
-            if usuario.ID < 1 {
-                return nil, errors.New(fmt.Sprintf("Usuario %s no encontrado",usuario.Correo))
+
+            // Generate key validation
+            d := time.Now().String()
+            d = fmt.Sprintf("%s%s",d, usuario.Correo)
+
+            k := sha256.Sum256([]byte(d))
+            pwd := fmt.Sprintf("%x", k)
+            usuario.ClaveRecuperar = pwd
+            usuario.FechaRecuperacionClave = time.Now()
+
+            if err := db.Model(&usuario).Update(usuario).Error; err != nil {
+                return nil, err
             }
 
             // Send Email
-            from := mail.Address{"Yoel envio", "erik.2m2f@gmail.com"}
-            to := mail.Address{"hasta outlook", "jhoel_kl2@outlook.com"}
-            subject := "Enviando correo desde GO"
-            dest := Dest{Name: to.Address}
-
-            headers := make(map[string]string)
-            headers["From"] = from.String()
-            headers["To"] = to.String()
-            headers["Subject"] = subject
-            headers["Content-Type"] = `text/html; charset="UTF-8"`
-
-            message := ""
-            for k, v := range headers {
-                message += fmt.Sprintf("%s: %s\r\n", k, v)
-            }
-
-            
             t, err := template.ParseFiles("public/mail.html")
-            checkErr(err)
+            if err != nil{
+                log.Panic(err)
+            }
 
             buf := new(bytes.Buffer)
-            err = t.Execute(buf, dest)
-            checkErr(err)
-
-            message += buf.String()
-
-            servername := "smtp.gmail.com:465"
-            host := "smtp.gmail.com"
-
-            auth := smtp.PlainAuth("", "erik.2m2f@gmail.com", "mamani147$%", host)
-
-            tlsConfig := &tls.Config{
-                InsecureSkipVerify: true,
-                ServerName: host,
+            err = t.Execute(buf, usuario)
+            if err != nil{
+                log.Panic(err)
             }
 
-            conn, err := tls.Dial("tcp", servername, tlsConfig)
-            checkErr(err)
-
-            client, err := smtp.NewClient(conn, host)
-            checkErr(err)
-
-            err = client.Auth(auth)
-            checkErr(err)
-
-            err = client.Mail(from.Address)
-            checkErr(err)
-
-            err = client.Rcpt(to.Address)
-            checkErr(err)
-
-            w, err := client.Data()
-            checkErr(err)
-
-            _, err = w.Write([]byte(message))
-            checkErr(err)
-
-            err = w.Close()
-            checkErr(err)
-
-            client.Quit()
+            err = config.SendEmail(usuario.Correo,"Recuperar contraseña",buf.String())
+            if err != nil {
+               log.Panic(err)
+            }
 
             return usuario, nil
         },
-    }
-}
-
-type Dest struct {
-    Name string
-}
-
-func checkErr(err error) {
-    if err != nil {
-        log.Panic(err)
     }
 }

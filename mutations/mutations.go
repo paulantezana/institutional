@@ -36,7 +36,7 @@ func GetRootFields() graphql.Fields {
 		"CreateUsuario": CreateUsuarioMutation(),
 		"UpdateUsuario": UpdateUsuarioMutation(),
 		"DeleteUsuario": DeleteUsuarioMutation(),
-		"RecoverPassword": RecoverPassword(),
+		"RecoverPassword": RecoverPasswordMutation(),
 
 		"CreateProfesor": CreateProfesorMutation(),
 		"UpdateProfesor": UpdateProfesorMutation(),

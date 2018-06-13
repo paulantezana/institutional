@@ -18,6 +18,7 @@ type Usuario struct {
 	ConfirmarClave         string     `json:"confirmar_clave,omitempty" gorm:"-"`
 	ClaveAntigua           string     `json:"clave_antigua,omitempty" gorm:"-"`
 	ClaveRecuperar         string     `json:"clave_recuperar"`
+	FechaRecuperacionClave time.Time `json:"fecha_recuperacion_clave"`
 	FechaModificacionClave time.Time  `json:"fecha_modificacion_clave"`
 	Estado                 bool       `json:"estado" gorm:"default:'true'"`
 	Alumno                 []Alumno   `json:"alumno, omitempty"`
@@ -43,6 +44,7 @@ var UsuarioType = graphql.NewObject(
 			"clave":                    &graphql.Field{Type: graphql.String},
 			"clave_recuperar":          &graphql.Field{Type: graphql.String},
 			"fecha_modificacion_clave": &graphql.Field{Type: graphql.DateTime},
+            "fecha_recuperacion_clave": &graphql.Field{Type: graphql.DateTime},
 			"estado":                   &graphql.Field{Type: graphql.Boolean},
 		},
 	},
