@@ -7,7 +7,7 @@
         "database" : "institutional"
     },
     "Mode": {
-        "dev" : true
+        "dev" : false
     },
     "Email": {
         "name": "Mucha nota que se nota",
