@@ -18,7 +18,6 @@ func GetRootFields() graphql.Fields {
 		"CoreSubMenus": CoreSubMenuQuery(),
 		"CorePermits":  CorePermitQuery(),
 
-		"Login":      LoginQuery(),
 		"Usuarios":   UsuarioQuery(),
 		"ConfirmRecoverPassword":ConfirmRecoverPasswordQuery(),
 		"Alumnos":    AlumnoQuery(),

@@ -11,16 +11,23 @@ import (
 	"github.com/paulantezana/institutional/queries"
 	"net/http"
 	"os"
-	"time"
     "github.com/paulantezana/institutional/security"
-    "github.com/gorilla/mux"
+	"github.com/gorilla/mux"
+	"github.com/gorilla/handlers"
+    "flag"
+    "github.com/paulantezana/institutional/config"
 )
 
 func main() {
 	// Migration database
-	fmt.Println("Init migration")
-	migrations.Migrate()
-	fmt.Println("Finalize migration")
+    var migrate string
+    flag.StringVar(&migrate, "migrate", "no", "Genera la migración a la BD")
+    flag.Parse()
+    if migrate == "yes" {
+        fmt.Println("Init migration")
+        migrations.Migrate()
+        fmt.Println("Finalize migration")
+    }
 
 	// root mutation
 	rootMutation := graphql.NewObject(graphql.ObjectConfig{
@@ -65,18 +72,19 @@ func main() {
 	// Custom port
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "7070"
-	}
-	// Config server
-	server := &http.Server{
-		Addr:           ":" + port,
-		Handler:        router,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+		port = config.GetConfig().Server.Port
 	}
 
 	// listening server
-	fmt.Println("listening... http://localhost:7070")
-	log.Fatal(server.ListenAndServe())
+    fmt.Println("======================================================")
+	fmt.Println("Software developer paul antezana - architecture frontend")
+    fmt.Println("=> http server started on http://localhost:" + port)
+    fmt.Println("======================================================")
+
+	// Config coors server listener
+	log.Fatal(http.ListenAndServe(":" + port, handlers.CORS(
+		handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
+		handlers.AllowedMethods([]string{"GET", "POST"}),
+		handlers.AllowedOrigins([]string{"*"}))(router),
+	))
 }

@@ -6,8 +6,12 @@
         "pass"     : "cascadesheet",
         "database" : "institutional"
     },
+    "Server" : {
+        "port": "7070",
+        "key": "Mc]-7EEP}vJ{q{P@"
+    },
     "Mode": {
-        "dev" : false
+        "dev" : true
     },
     "Email": {
         "name": "Mucha nota que se nota",

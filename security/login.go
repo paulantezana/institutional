@@ -12,8 +12,6 @@ import (
 
 // Login es el controlador de login
 func Login(w http.ResponseWriter, r *http.Request) {
-    setupResponse(&w, r) // Restriction coors
-
     user := models.Usuario{}
     err := json.NewDecoder(r.Body).Decode(&user)
     if err != nil {

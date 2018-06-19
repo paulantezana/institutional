@@ -32,6 +32,12 @@ type Config struct {
 	Mode     Mode
 	Database Database
 	Email Email
+    Server Server
+}
+
+type Server struct {
+    Port string
+    Key string
 }
 
 

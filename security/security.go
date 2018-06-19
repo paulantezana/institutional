@@ -5,7 +5,7 @@ import (
 	"github.com/paulantezana/institutional/models"
 	"log"
 	"time"
-    "net/http"
+    "github.com/paulantezana/institutional/config"
 )
 
 // GenerateJWT generate token custom claims
@@ -23,16 +23,9 @@ func GenerateJWT(user models.Usuario) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Generate encoded token and send it as response.
-	result, err := token.SignedString([]byte("secret"))
+	result, err := token.SignedString([]byte(config.GetConfig().Server.Key))
 	if err != nil {
 		log.Fatal("No se pudo firmar el token")
 	}
 	return result
 }
-
-func setupResponse(w *http.ResponseWriter, req *http.Request) {
-    (*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3005")
-    (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET")
-    (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-}
-
