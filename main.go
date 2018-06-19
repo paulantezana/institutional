@@ -12,6 +12,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+    "github.com/paulantezana/institutional/security"
+    mux2 "github.com/gorilla/mux"
 )
 
 func main() {
@@ -50,15 +52,16 @@ func main() {
 	})
 
 	// Create new server mux
-	mux := http.NewServeMux()
+	router := mux2.NewRouter()
+	//mux := http.NewServeMux()
 
-	// Static file server
-	fs := http.FileServer(http.Dir("public"))
-	mux.Handle("/", fs)
+	//Static file server
+	router.Handle("/",http.FileServer(http.Dir("public")))
 
 	// Handle functions
-	mux.Handle("/graphql", h)
-	mux.HandleFunc("/graphiql", graphiql.ServeGraphiQL)
+	router.HandleFunc("/login",security.Login).Methods("POST")
+	router.Handle("/graphql",security.HandleValidate(h))
+	router.HandleFunc("/graphiql", graphiql.ServeGraphiQL)
 
 	// Custom port
 	port := os.Getenv("PORT")
@@ -68,7 +71,7 @@ func main() {
 	// Config server
 	server := &http.Server{
 		Addr:           ":" + port,
-		Handler:        mux,
+		Handler:        router,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,

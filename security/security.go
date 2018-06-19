@@ -5,6 +5,7 @@ import (
 	"github.com/paulantezana/institutional/models"
 	"log"
 	"time"
+    "net/http"
 )
 
 // GenerateJWT generate token custom claims
@@ -28,3 +29,10 @@ func GenerateJWT(user models.Usuario) string {
 	}
 	return result
 }
+
+func setupResponse(w *http.ResponseWriter, req *http.Request) {
+    (*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3005")
+    (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET")
+    (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+}
+
