@@ -13,7 +13,7 @@ import (
 	"os"
 	"time"
     "github.com/paulantezana/institutional/security"
-    mux2 "github.com/gorilla/mux"
+    "github.com/gorilla/mux"
 )
 
 func main() {
@@ -52,8 +52,7 @@ func main() {
 	})
 
 	// Create new server mux
-	router := mux2.NewRouter()
-	//mux := http.NewServeMux()
+	router := mux.NewRouter()
 
 	//Static file server
 	router.Handle("/",http.FileServer(http.Dir("public")))
