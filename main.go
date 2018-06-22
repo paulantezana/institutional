@@ -62,7 +62,7 @@ func main() {
 	router := mux.NewRouter()
 
 	//Static file server
-	router.Handle("/",http.FileServer(http.Dir("public")))
+    router.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
 
 	// Handle functions
 	router.HandleFunc("/login",security.Login).Methods("POST")
