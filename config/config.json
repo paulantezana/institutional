@@ -10,9 +10,6 @@
         "port": "7070",
         "key": "Mc]-7EEP}vJ{q{P@"
     },
-    "Mode": {
-        "dev" : false
-    },
     "Email": {
         "name": "Mucha nota que se nota",
         "from": "paul.antezana.2@gmail.com",

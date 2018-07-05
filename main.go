@@ -2,13 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/graphql-go/graphql"
-	"github.com/graphql-go/handler"
 	"github.com/labstack/gommon/log"
 	"github.com/mnmtanish/go-graphiql"
-	"github.com/paulantezana/institutional/migrations"
-	"github.com/paulantezana/institutional/mutations"
-	"github.com/paulantezana/institutional/queries"
 	"net/http"
 	"os"
     "github.com/paulantezana/institutional/security"
@@ -16,75 +11,97 @@ import (
 	"github.com/gorilla/handlers"
     "flag"
     "github.com/paulantezana/institutional/config"
+    "github.com/paulantezana/institutional/models"
+    "github.com/paulantezana/institutional/schema"
 )
 
 func main() {
-	// Migration database
     var migrate string
     flag.StringVar(&migrate, "migrate", "no", "Genera la migración a la BD")
     flag.Parse()
     if migrate == "yes" {
         fmt.Println("Init migration")
-        migrations.Migrate()
+        Migrate()
         fmt.Println("Finalize migration")
     }
 
-	// root mutation
-	rootMutation := graphql.NewObject(graphql.ObjectConfig{
-		Name:   "RootMutation",
-		Fields: mutations.GetRootFields(),
-	})
+    // Create new server mux
+    router := mux.NewRouter()
 
-	//root query
-	//we just define a trivial example here, since root query is required.
-	rootQuery := graphql.NewObject(graphql.ObjectConfig{
-		Name:   "RootQuery",
-		Fields: queries.GetRootFields(),
-	})
+    // Custom port
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = config.GetConfig().Server.Port
+    }
 
-	// define schema
-	schema, err := graphql.NewSchema(graphql.SchemaConfig{
-		Query:    rootQuery,
-		Mutation: rootMutation,
-	})
+    router.HandleFunc("/login",security.Login).Methods("POST")
+    router.Handle("/graphql", schema.GraphQL())            // GraphQL Server
 
-	if err != nil {
-		panic(err)
-	}
+    router.HandleFunc("/graphiql", graphiql.ServeGraphiQL) // GraphiQL Server
+    router.PathPrefix("/").Handler(http.FileServer(http.Dir("public"))) //Static file server
 
-	h := handler.New(&handler.Config{
-		Schema:   &schema,
-		Pretty:   true,
-		GraphiQL: true,
-	})
+    fmt.Println("=> http server started on http://localhost:" + port) // listening server message
 
-	// Create new server mux
-	router := mux.NewRouter()
+    // Config coors server listener
+    log.Fatal(http.ListenAndServe(":"+port, handlers.CORS(
+        handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
+        handlers.AllowedMethods([]string{"GET", "POST"}),
+        handlers.AllowedOrigins([]string{"*"}))(router),
+    ))
+}
 
-	//Static file server
-    router.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
+func Migrate() {
+    db := config.GetConnection()
+    defer db.Close()
 
-	// Handle functions
-	router.HandleFunc("/login",security.Login).Methods("POST")
-	router.Handle("/graphql",security.HandleValidate(h))
-	router.HandleFunc("/graphiql", graphiql.ServeGraphiQL)
+    db.AutoMigrate(
+        &models.Core{},
+        &models.CoreMenu{},
+        &models.CoreModulo{},
+        &models.CorePermit{},
+        &models.CoreRol{},
+        &models.CoreSubMenu{},
 
-	// Custom port
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = config.GetConfig().Server.Port
-	}
+        &models.Instituto{},
+        &models.Filial{},
+        &models.Carrera{},
+        &models.Semestre{},
+        &models.Modulo{},
+        &models.Unidad{},
 
-	// listening server
-    fmt.Println("======================================================")
-	fmt.Println("Software developer paul antezana - architecture frontend")
-    fmt.Println("=> http server started on http://localhost:" + port)
-    fmt.Println("======================================================")
+        &models.Usuario{},
+        &models.Alumno{},
+        &models.Profesor{},
 
-	// Config coors server listener
-	log.Fatal(http.ListenAndServe(":" + port, handlers.CORS(
-		handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
-		handlers.AllowedMethods([]string{"GET", "POST"}),
-		handlers.AllowedOrigins([]string{"*"}))(router),
-	))
+        &models.Monto{},
+        &models.Pago{},
+        &models.Beca{},
+        &models.Matricula{},
+
+        &models.Empresa{},
+        &models.Practica{},
+        &models.PracticaNota{},
+        &models.Representante{},
+
+        &models.Personal{},
+
+        &models.Nota{},
+
+        &models.CategoriaLibro{},
+        &models.Libro{},
+        &models.Prestamo{},
+    )
+
+    //db.Model(&models.Filial{}).AddForeignKey("instituto_id", "institutos(id)", "RESTRICT", "RESTRICT")
+    //db.Model(&models.Carrera{}).AddForeignKey("filial_id", "filiales(id)", "RESTRICT", "RESTRICT")
+    //db.Model(&models.Semestre{}).AddForeignKey("carrera_id", "carreras(id)", "RESTRICT", "RESTRICT")
+    //db.Model(&models.Modulo{}).AddForeignKey("semestre_id", "semestres(id)", "RESTRICT", "RESTRICT")
+    //db.Model(&models.Unidad{}).AddForeignKey("modulo_id", "modulos(id)", "RESTRICT", "RESTRICT")
+    //
+    //db.Model(&models.CorePermit{}).AddForeignKey("core_sub_menu_id","core_modulos(id)","RESTRICT", "RESTRICT")
+    //db.Model(&models.CoreSubMenu{}).AddForeignKey("core_menu_id","core_menus(id)","RESTRICT", "RESTRICT")
+    //db.Model(&models.CoreMenu{}).AddForeignKey("core_rol_id","core_roles(id)","RESTRICT", "RESTRICT")
+    //db.Model(&models.CoreModulo{}).AddForeignKey("core_rol_id","core_roles(id)","RESTRICT", "RESTRICT")
+    //
+    //db.Model(&models.Usuario{}).AddForeignKey("core_rol_id","core_roles(id)","RESTRICT", "RESTRICT")
 }

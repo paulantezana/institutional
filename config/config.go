@@ -16,10 +16,6 @@ type Database struct {
 	Database string
 }
 
-type Mode struct {
-	Dev bool
-}
-
 type Email struct {
     Name string
     From string
@@ -29,7 +25,6 @@ type Email struct {
 }
 
 type Config struct {
-	Mode     Mode
 	Database Database
 	Email Email
     Server Server

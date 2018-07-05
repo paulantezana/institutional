@@ -8,6 +8,7 @@ import (
     "log"
     "github.com/paulantezana/institutional/models"
     "github.com/paulantezana/institutional/config"
+    "github.com/paulantezana/institutional/helpers"
 )
 
 // Login es el controlador de login
@@ -38,6 +39,15 @@ func Login(w http.ResponseWriter, r *http.Request) {
         w.WriteHeader(http.StatusOK)
         w.Write(j)
     } else {
-        http.Error(w,"Usuario o contraseña incorrecta",http.StatusUnauthorized)
+        msg, err := json.Marshal(helpers.Message{
+            Message: "Usuario o contraseña incorrecta",
+            Type: "error",
+        })
+        if err != nil {
+            log.Fatalf("Error al convertir el token a json: %s", err)
+        }
+        w.Header().Set("Content-Type", "application/json; charset=utf-8")
+        w.WriteHeader(http.StatusOK)
+        w.Write(msg)
     }
 }
