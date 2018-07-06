@@ -1,8 +1,7 @@
 package helpers
 
-type Message struct {
-    ID      uint   `json:"id"`
-    Title   string `json:"title"`
-    Message string `json:"message"`
-    Type string `json:"type"`
+type Response struct {
+    Errors []string `json:"errors"`
+    Success  bool `json:"success"`
+    Data interface{} `json:"data"`
 }
