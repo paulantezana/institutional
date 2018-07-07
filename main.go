@@ -19,11 +19,11 @@ func main() {
     var migrate string
     flag.StringVar(&migrate, "migrate", "no", "Genera la migración a la BD")
     flag.Parse()
-    if migrate == "yes" {
+    //if migrate == "yes" {
         fmt.Println("Init migration")
         Migrate()
         fmt.Println("Finalize migration")
-    }
+    //}
 
     // Create new server mux
     router := mux.NewRouter()
