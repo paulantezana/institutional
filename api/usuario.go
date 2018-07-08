@@ -3,7 +3,6 @@ package api
 import (
     "net/http"
     "github.com/paulantezana/institutional/models"
-    "encoding/json"
     "fmt"
     "github.com/paulantezana/institutional/config"
     "github.com/paulantezana/institutional/helpers"
@@ -13,155 +12,118 @@ import (
     "bytes"
     "html/template"
     "crypto/sha256"
+    "github.com/labstack/echo"
 )
 
-func ForgoutSearch(w http.ResponseWriter, r *http.Request) {
-    xUser := models.Usuario{}
+func ForgoutSearch(c echo.Context) error {
     user := models.Usuario{}
-    err := json.NewDecoder(r.Body).Decode(&xUser)
-    if err != nil {
-        fmt.Fprintf(w, "Error: %s\n", err)
-        return
+    if err := c.Bind(&user); err != nil {
+        return err
     }
-    // Create response
-    res := helpers.Response{}
 
-    // get connection
+    // Get connection
     db := config.GetConnection()
     defer db.Close()
 
     // Validations
-    if err := db.Where("correo = ?", xUser.Correo).First(&user).Error; err != nil {
-        res = helpers.Response{
+    if err := db.Where("correo = ?", user.Correo).First(&user).Error; err != nil {
+        return c.JSON(http.StatusOK,helpers.Response{
             Errors: []string{"Tu búsqueda no arrojó ningún resultado. Vuelve a intentarlo con otros datos."},
             Success: false,
-        }
-    }else {
-        //Generate key validation
-        key := (int)(rand.Float32() * 10000000)
-        user.ClaveRecuperar = fmt.Sprint(key)
-        user.FechaRecuperacionClave = time.Now()
-
-        //Update database
-        if err := db.Model(&user).Update(user).Error; err != nil {
-            return
-        }
-
-        // SEND EMAIL get html template
-        t, err := template.ParseFiles("public/mail.html")
-        if err != nil{
-          log.Panic(err)
-        }
-        // SEND EMAIL new buffer
-        buf := new(bytes.Buffer)
-        err = t.Execute(buf, user)
-        if err != nil{
-          log.Panic(err)
-        }
-
-        // SEND EMAIL
-        err = config.SendEmail(user.Correo, fmt.Sprint(key) + " es el código de recuperación de tu cuenta en SINST",buf.String())
-        if err != nil {
-          log.Panic(err)
-        }
-
-        // Response success api service
-        user.ClaveRecuperar = ""
-        user.Clave = ""
-        res = helpers.Response{
-            Success: true,
-            Data: user,
-            Errors: []string{},
-        }
+        })
     }
 
-    j, err := json.Marshal(res)
+    // Generate key validation
+    key := (int)(rand.Float32() * 10000000)
+    user.ClaveRecuperar = fmt.Sprint(key)
+    user.FechaRecuperacionClave = time.Now()
+
+    // Update database
+    if err := db.Model(&user).Update(user).Error; err != nil {
+        return c.JSON(http.StatusInternalServerError,err)
+    }
+
+    // SEND EMAIL get html template
+    t, err := template.ParseFiles("public/mail.html")
+    if err != nil{
+      log.Panic(err)
+    }
+
+    // SEND EMAIL new buffer
+    buf := new(bytes.Buffer)
+    err = t.Execute(buf, user)
+    if err != nil{
+      log.Panic(err)
+    }
+
+    // SEND EMAIL
+    err = config.SendEmail(user.Correo, fmt.Sprint(key) + " es el código de recuperación de tu cuenta en SINST",buf.String())
     if err != nil {
-        log.Fatalf("Error al convertir el response a json: %s", err)
+      log.Panic(err)
     }
-    w.Header().Set("Content-Type", "application/json; charset=utf-8")
-    w.WriteHeader(http.StatusOK)
-    w.Write(j)
+
+    // Response success api service
+    user.ClaveRecuperar = ""
+    user.Clave = ""
+    return c.JSON(http.StatusOK,helpers.Response{
+        Success: true,
+        Data: user,
+        Errors: []string{},
+    })
 }
 
-func ForgoutValidate(w http.ResponseWriter, r *http.Request) {
-    xUser := models.Usuario{}
+func ForgoutValidate(c echo.Context) error {
     user := models.Usuario{}
-    err := json.NewDecoder(r.Body).Decode(&xUser)
-    if err != nil {
-        fmt.Fprintf(w, "Error: %s\n", err)
-        return
+    if err := c.Bind(&user); err != nil {
+        return err
     }
-    // Create response
-    res := helpers.Response{}
 
     // get connection
     db := config.GetConnection()
     defer db.Close()
 
     // Validations
-    if err := db.Where("id = ? AND clave_recuperar = ?", xUser.ID, xUser.ClaveRecuperar).First(&user).Error; err != nil {
-        res = helpers.Response{
+    if err := db.Where("id = ? AND clave_recuperar = ?", user.ID, user.ClaveRecuperar).First(&user).Error; err != nil {
+        return c.JSON(http.StatusOK,helpers.Response{
             Errors: []string{"El número que ingresaste no coincide con tu código. Vuelve a intentarlo"},
             Success: false,
-        }
-    }else {
-        user.ClaveRecuperar = ""
-        user.Clave = ""
+        })
+    }
 
-        // Validate expiration
-        if time.Now().Year() != user.FechaRecuperacionClave.Year() || time.Now().Month() != user.FechaRecuperacionClave.Month() {
-            res = helpers.Response{
+    // Validate expiration
+    if
+        time.Now().Year() != user.FechaRecuperacionClave.Year() ||
+        time.Now().Month() != user.FechaRecuperacionClave.Month() ||
+        time.Now().Day() - user.FechaRecuperacionClave.Day() > 7{
+            return c.JSON(http.StatusOK,helpers.Response{
                 Success: false,
                 Errors: []string{"La clave ya expiró"},
-            }
-        }else {
-            if time.Now().Day() - user.FechaRecuperacionClave.Day() > 7 {
-                res = helpers.Response{
-                    Success: false,
-                    Errors: []string{"La clave ya expiró"},
-                }
-            }else {
-                // Response success api service
-                res = helpers.Response{
-                    Success: true,
-                    Data: user,
-                    Errors: []string{},
-                }
-            }
-        }
-
-
+            })
     }
 
-    j, err := json.Marshal(res)
-    if err != nil {
-        log.Fatalf("Error al convertir el response a json: %s", err)
-    }
-    w.Header().Set("Content-Type", "application/json; charset=utf-8")
-    w.WriteHeader(http.StatusOK)
-    w.Write(j)
+    user.ClaveRecuperar = ""
+    user.Clave = ""
+
+    return c.JSON(http.StatusOK,helpers.Response{
+        Success: true,
+        Data: user,
+        Errors: []string{},
+    })
 }
 
-func ForgoutChange(w http.ResponseWriter, r *http.Request) {
+func ForgoutChange(c echo.Context) error {
     xUser := models.Usuario{}
-    err := json.NewDecoder(r.Body).Decode(&xUser)
-    if err != nil {
-        fmt.Fprintf(w, "Error: %s\n", err)
-        return
-    }
-
-    // Create response
     user := models.Usuario{}
-    res := helpers.Response{}
+    if err := c.Bind(&xUser); err != nil {
+        return err
+    }
 
     // get connection
     db := config.GetConnection()
     defer db.Close()
 
     if err := db.Where("id = ?", xUser.ID).First(&user).Error; err != nil {
-        fmt.Fprintf(w, "Error: usuario no encontrado %s\n", err)
-        return
+        return err
     }
 
     // Encrypted old password
@@ -173,21 +135,11 @@ func ForgoutChange(w http.ResponseWriter, r *http.Request) {
     user.ClaveRecuperar = ""
     user.FechaModificacionClave = time.Now()
     if err := db.Model(&user).Update(user).Error; err != nil {
-        fmt.Fprintf(w, "Error: no se pudo actualizar los datos %s\n", err)
-        return
+        return err
     }
 
-    res = helpers.Response{
+    return c.JSON(http.StatusOK,helpers.Response{
         Success: true,
         Data: user,
-        Errors: []string{},
-    }
-
-    j, err := json.Marshal(res)
-    if err != nil {
-        log.Fatalf("Error al convertir el response a json: %s", err)
-    }
-    w.Header().Set("Content-Type", "application/json; charset=utf-8")
-    w.WriteHeader(http.StatusOK)
-    w.Write(j)
+    })
 }

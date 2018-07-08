@@ -2,63 +2,53 @@ package security
 
 import (
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/paulantezana/institutional/config"
 	"github.com/paulantezana/institutional/models"
     "github.com/paulantezana/institutional/helpers"
+    "github.com/labstack/echo"
 )
 
 // Login es el controlador de login
-func Login(w http.ResponseWriter, r *http.Request) {
+func Login(c echo.Context) error {
 	user := models.Usuario{}
-	err := json.NewDecoder(r.Body).Decode(&user)
-	if err != nil {
-		fmt.Fprintf(w, "Error: %s\n", err)
-		return
-	}
+    if err := c.Bind(&user); err != nil {
+        return err
+    }
 
 	db := config.GetConnection()
 	defer db.Close()
 
-	c := sha256.Sum256([]byte(user.Clave))
-	pwd := fmt.Sprintf("%x", c)
+	cc := sha256.Sum256([]byte(user.Clave))
+	pwd := fmt.Sprintf("%x", cc)
 
-	// Email
-    db.Where("correo = ? and clave = ?", user.Usuario, pwd).First(&user)
-    if user.ID < 1 {
-	    db.Where("usuario = ? and clave = ?", user.Usuario, pwd).First(&user)
+	// Validate user and email
+    db.Where("usuario = ? and clave = ?", user.Usuario, pwd).First(&user)
+    if user.ID == 0 {
+        db.Where("correo = ? and clave = ?", user.Usuario, pwd).First(&user)
     }
 
-	// User
-	if user.ID > 0 {
-		user.Clave = ""
-		user.ClaveAntigua =""
-		user.ClaveRecuperar =""
-		token := GenerateJWT(user)
-		j, err := json.Marshal(helpers.Response{
-            Success: true,
-		    Data: Token{Token:token},
+	// Response data login
+	if user.ID == 0 {
+        return c.JSON(http.StatusOK, helpers.Response{
+            Success: false,
+            Errors: []string{"El nombre de usuario o contraseña es incorecta"},
         })
-		if err != nil {
-			log.Fatalf("Error al convertir el token a json: %s", err)
-		}
-		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusOK)
-		w.Write(j)
-	} else {
-	    j, err := json.Marshal(helpers.Response{
-	        Success: false,
-	        Errors: []string{"El nombre de usuario o contraseña es incorecta"},
-        })
-		if err != nil {
-			log.Fatalf("Error al convertir el token a json: %s", err)
-		}
-		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusOK)
-		w.Write(j)
 	}
+
+	// customize send data
+    user.Clave = ""
+    user.ClaveAntigua =""
+    user.ClaveRecuperar =""
+
+    // get token key
+    token := GenerateJWT(user)
+
+    // Login success
+    return c.JSON(http.StatusOK, helpers.Response{
+        Success: true,
+        Data: Token{Token:token},
+    })
 }

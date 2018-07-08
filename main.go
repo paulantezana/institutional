@@ -2,17 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/labstack/gommon/log"
-	"github.com/mnmtanish/go-graphiql"
-	"net/http"
 	"os"
-    "github.com/paulantezana/institutional/security"
-	"github.com/gorilla/mux"
-	"github.com/gorilla/handlers"
     "flag"
     "github.com/paulantezana/institutional/config"
     "github.com/paulantezana/institutional/models"
-    "github.com/paulantezana/institutional/schema"
+    "github.com/labstack/echo"
+    "github.com/labstack/echo/middleware"
+    "github.com/paulantezana/institutional/security"
     "github.com/paulantezana/institutional/api"
 )
 
@@ -27,7 +23,14 @@ func main() {
     //}
 
     // Create new server mux
-    router := mux.NewRouter()
+    e := echo.New()
+
+    // COR
+    e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+        AllowOrigins: []string{"*"},
+        //AllowHeaders: []string{"X-Requested-With", "Content-Type", "Authorization"},
+        AllowMethods: []string{echo.GET, echo.POST},
+    }))
 
     // Custom port
     port := os.Getenv("PORT")
@@ -35,25 +38,23 @@ func main() {
         port = config.GetConfig().Server.Port
     }
 
-    router.HandleFunc("/login",security.Login).Methods("POST")
+    //router.Handle("/graphql", schema.GraphQL())            // GraphQL Server
+	//
+    //router.HandleFunc("/graphiql", graphiql.ServeGraphiQL) // GraphiQL Server
+    //router.PathPrefix("/").Handler(http.FileServer(http.Dir("public"))) //Static file server
+    //gq := e.Group("/graphql")
+    //gq.POST("")
 
-    router.HandleFunc("/forgout/serach",api.ForgoutSearch).Methods("POST")
-    router.HandleFunc("/forgout/validate",api.ForgoutValidate).Methods("POST")
-    router.HandleFunc("/forgout/change",api.ForgoutChange).Methods("POST")
+    ar := e.Group("")
+    ar.Use(middleware.Logger())
+    ar.Use(middleware.Recover())
 
-    router.Handle("/graphql", schema.GraphQL())            // GraphQL Server
+    ar.POST("/login",security.Login)
+    ar.POST("/forgout/serach",api.ForgoutSearch)
+    ar.POST("/forgout/validate",api.ForgoutValidate)
+    ar.POST("/forgout/change",api.ForgoutChange)
 
-    router.HandleFunc("/graphiql", graphiql.ServeGraphiQL) // GraphiQL Server
-    router.PathPrefix("/").Handler(http.FileServer(http.Dir("public"))) //Static file server
-
-    fmt.Println("=> http server started on http://localhost:" + port) // listening server message
-
-    // Config coors server listener
-    log.Fatal(http.ListenAndServe(":"+port, handlers.CORS(
-        handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
-        handlers.AllowedMethods([]string{"GET", "POST"}),
-        handlers.AllowedOrigins([]string{"*"}))(router),
-    ))
+    e.Logger.Fatal(e.Start(":"+port))
 }
 
 func Migrate() {

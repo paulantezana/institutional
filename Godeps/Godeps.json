@@ -9,16 +9,6 @@
 			"Rev": "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
 		},
 		{
-			"ImportPath": "github.com/gorilla/handlers",
-			"Comment": "v1.3.0-4-g13a38d2",
-			"Rev": "13a38d26174b16d5b4bf6f1094c1389ec9879572"
-		},
-		{
-			"ImportPath": "github.com/gorilla/mux",
-			"Comment": "v1.6.2-3-gcb46983",
-			"Rev": "cb4698366aa625048f3b815af6a0dea8aef9280a"
-		},
-		{
 			"ImportPath": "github.com/graphql-go/graphql",
 			"Comment": "v0.7.5-26-g69a5a57",
 			"Rev": "69a5a57cb2766bca2eed3f0ff205dfe824788c03"
@@ -74,11 +64,6 @@
 			"Rev": "69a5a57cb2766bca2eed3f0ff205dfe824788c03"
 		},
 		{
-			"ImportPath": "github.com/graphql-go/handler",
-			"Comment": "v0.2.1-6-gc1c8ee7",
-			"Rev": "c1c8ee7b173a5f70fe039529659fbb30f1a435a0"
-		},
-		{
 			"ImportPath": "github.com/jinzhu/gorm",
 			"Comment": "v1.9.1-1-g52c5c81",
 			"Rev": "52c5c8127cf4aeffde3e0aa9222640832075a90f"
@@ -88,12 +73,32 @@
 			"Rev": "04140366298a54a039076d798123ffa108fff46c"
 		},
 		{
+			"ImportPath": "github.com/labstack/echo",
+			"Comment": "3.3.4-3-g37f1a47",
+			"Rev": "37f1a470efa8abb7e89ad221cb4b1cc36f7047bb"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/middleware",
+			"Comment": "3.3.4-3-g37f1a47",
+			"Rev": "37f1a470efa8abb7e89ad221cb4b1cc36f7047bb"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/bytes",
+			"Comment": "0.2.4-1-g3bc2d33",
+			"Rev": "3bc2d333a4c30531c47051369043bcabd62ff4c0"
+		},
+		{
 			"ImportPath": "github.com/labstack/gommon/color",
 			"Comment": "0.2.4-1-g3bc2d33",
 			"Rev": "3bc2d333a4c30531c47051369043bcabd62ff4c0"
 		},
 		{
 			"ImportPath": "github.com/labstack/gommon/log",
+			"Comment": "0.2.4-1-g3bc2d33",
+			"Rev": "3bc2d333a4c30531c47051369043bcabd62ff4c0"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/random",
 			"Comment": "0.2.4-1-g3bc2d33",
 			"Rev": "3bc2d333a4c30531c47051369043bcabd62ff4c0"
 		},
@@ -118,16 +123,20 @@
 			"Rev": "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
 		},
 		{
-			"ImportPath": "github.com/mnmtanish/go-graphiql",
-			"Rev": "cef5a61bd62b996aa67029c6c858f673d6e51718"
-		},
-		{
 			"ImportPath": "github.com/valyala/bytebufferpool",
 			"Rev": "e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7"
 		},
 		{
 			"ImportPath": "github.com/valyala/fasttemplate",
 			"Rev": "dcecefd839c4193db0d35b88ec65b4c12d360ab0"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/acme",
+			"Rev": "b2aa35443fbc700ab74c586ae79b81c171851023"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/acme/autocert",
+			"Rev": "b2aa35443fbc700ab74c586ae79b81c171851023"
 		},
 		{
 			"ImportPath": "golang.org/x/sys/unix",
