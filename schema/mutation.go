@@ -39,7 +39,6 @@ func RootMutation() graphql.Fields {
         "CreateUsuario": mutations.CreateUsuarioMutation(),
         "UpdateUsuario": mutations.UpdateUsuarioMutation(),
         "DeleteUsuario": mutations.DeleteUsuarioMutation(),
-        "RecoverPassword": mutations.RecoverPasswordMutation(),
 
         "CreateProfesor": mutations.CreateProfesorMutation(),
         "UpdateProfesor": mutations.UpdateProfesorMutation(),

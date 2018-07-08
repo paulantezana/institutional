@@ -13,6 +13,7 @@ import (
     "github.com/paulantezana/institutional/config"
     "github.com/paulantezana/institutional/models"
     "github.com/paulantezana/institutional/schema"
+    "github.com/paulantezana/institutional/api"
 )
 
 func main() {
@@ -35,6 +36,11 @@ func main() {
     }
 
     router.HandleFunc("/login",security.Login).Methods("POST")
+
+    router.HandleFunc("/forgout/serach",api.ForgoutSearch).Methods("POST")
+    router.HandleFunc("/forgout/validate",api.ForgoutValidate).Methods("POST")
+    router.HandleFunc("/forgout/change",api.ForgoutChange).Methods("POST")
+
     router.Handle("/graphql", schema.GraphQL())            // GraphQL Server
 
     router.HandleFunc("/graphiql", graphiql.ServeGraphiQL) // GraphiQL Server

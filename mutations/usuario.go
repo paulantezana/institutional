@@ -8,9 +8,7 @@ import (
     "fmt"
     "time"
     "crypto/sha256"
-    "bytes"
-    "html/template"
-    "log"
+    "crypto/md5"
 )
 
 func CreateUsuarioMutation() *graphql.Field {
@@ -49,6 +47,10 @@ func CreateUsuarioMutation() *graphql.Field {
             cc := sha256.Sum256([]byte(usuario.Clave))
             pwd := fmt.Sprintf("%x", cc)
             usuario.Clave = pwd
+
+            picmd5 := md5.Sum([]byte(usuario.Correo))
+            picstr := fmt.Sprintf("%x", picmd5)
+            usuario.Avatar = "https://gravatar.com/avatar/" + picstr + "?s=100"
 
 			if err := db.Create(&usuario).Error; err != nil {
 				return nil, err
@@ -163,59 +165,4 @@ func DeleteUsuarioMutation() *graphql.Field {
 			return usuario, nil
 		},
 	}
-}
-
-func RecoverPasswordMutation() *graphql.Field {
-    return &graphql.Field {
-        Type: models.UsuarioType,
-        Args: graphql.FieldConfigArgument{
-            "correo":                  &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
-        },
-        Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-            usuario := models.Usuario{
-                Correo: p.Args["correo"].(string),
-            }
-
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
-
-            // Validations
-            if err := db.Where("correo = ?", usuario.Correo).First(&usuario).Error; err != nil {
-                return nil, err
-            }
-
-            // Generate key validation
-            d := time.Now().String()
-            d = fmt.Sprintf("%s%s",d, usuario.Correo)
-
-            k := sha256.Sum256([]byte(d))
-            pwd := fmt.Sprintf("%x", k)
-            usuario.ClaveRecuperar = pwd
-            usuario.FechaRecuperacionClave = time.Now()
-
-            if err := db.Model(&usuario).Update(usuario).Error; err != nil {
-                return nil, err
-            }
-
-            // Send Email
-            t, err := template.ParseFiles("public/mail.html")
-            if err != nil{
-                log.Panic(err)
-            }
-
-            buf := new(bytes.Buffer)
-            err = t.Execute(buf, usuario)
-            if err != nil{
-                log.Panic(err)
-            }
-
-            err = config.SendEmail(usuario.Correo,"Recuperar contraseña",buf.String())
-            if err != nil {
-               log.Panic(err)
-            }
-
-            return usuario, nil
-        },
-    }
 }

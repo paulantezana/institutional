@@ -22,7 +22,6 @@ func RootQuery() graphql.Fields {
         "CorePermits":  queries.CorePermitQuery(),
 
         "Usuarios":   queries.UsuarioQuery(),
-        "ConfirmRecoverPassword":queries.ConfirmRecoverPasswordQuery(),
         "Alumnos":    queries.AlumnoQuery(),
         "Profesores": queries.ProfesorQuery(),
         "Personales": queries.PersonalQuery(),
