@@ -53,6 +53,7 @@ func main() {
     ar.POST("/forgout/serach",api.ForgoutSearch)
     ar.POST("/forgout/validate",api.ForgoutValidate)
     ar.POST("/forgout/change",api.ForgoutChange)
+    ar.POST("/register",api.RegisterUser)
 
     e.Logger.Fatal(e.Start(":"+port))
 }

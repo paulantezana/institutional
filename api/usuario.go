@@ -13,6 +13,7 @@ import (
     "html/template"
     "crypto/sha256"
     "github.com/labstack/echo"
+    "crypto/md5"
 )
 
 func ForgoutSearch(c echo.Context) error {
@@ -136,6 +137,41 @@ func ForgoutChange(c echo.Context) error {
     user.FechaModificacionClave = time.Now()
     if err := db.Model(&user).Update(user).Error; err != nil {
         return err
+    }
+
+    return c.JSON(http.StatusOK,helpers.Response{
+        Success: true,
+        Data: user,
+    })
+}
+
+func RegisterUser(c echo.Context) error {
+    user := models.Usuario{}
+    if err := c.Bind(&user); err != nil {
+        return err
+    }
+
+    // get connection
+    db := config.GetConnection()
+    defer db.Close()
+
+    if user.Clave != user.ConfirmarClave {
+        c.JSON(http.StatusOK, helpers.Response{
+            Success: false,
+            Errors: []string{"Las contraseñas no coinciden"},
+        })
+    }
+
+    cc := sha256.Sum256([]byte(user.Clave))
+    pwd := fmt.Sprintf("%x", cc)
+    user.Clave = pwd
+
+    picmd5 := md5.Sum([]byte(user.Correo))
+    picstr := fmt.Sprintf("%x", picmd5)
+    user.Avatar = "https://gravatar.com/avatar/" + picstr + "?s=100"
+
+    if err := db.Create(&user).Error; err != nil {
+        return  err
     }
 
     return c.JSON(http.StatusOK,helpers.Response{
