@@ -27,7 +27,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	c := sha256.Sum256([]byte(user.Clave))
 	pwd := fmt.Sprintf("%x", c)
 
-	db.Where("usuario = ? and clave = ?", user.Usuario, pwd).First(&user)
+	// Email
+    db.Where("correo = ? and clave = ?", user.Usuario, pwd).First(&user)
+    if user.ID < 1 {
+	    db.Where("usuario = ? and clave = ?", user.Usuario, pwd).First(&user)
+    }
+
+	// User
 	if user.ID > 0 {
 		user.Clave = ""
 		user.ClaveAntigua =""
