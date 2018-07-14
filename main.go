@@ -10,6 +10,8 @@ import (
     "github.com/labstack/echo/middleware"
     "github.com/paulantezana/institutional/security"
     "github.com/paulantezana/institutional/api"
+    "github.com/graphql-go/handler"
+    "github.com/paulantezana/institutional/schemas"
 )
 
 func main() {
@@ -38,13 +40,17 @@ func main() {
         port = config.GetConfig().Server.Port
     }
 
-    //router.Handle("/graphql", schema.GraphQL())            // GraphQL Server
-	//
-    //router.HandleFunc("/graphiql", graphiql.ServeGraphiQL) // GraphiQL Server
-    //router.PathPrefix("/").Handler(http.FileServer(http.Dir("public"))) //Static file server
-    //gq := e.Group("/graphql")
-    //gq.POST("")
+    // GRAPH QL ========================================================================
+    h := handler.New(&handler.Config{
+        Schema:   &schemas.Schema,
+        Pretty:   true,
+        GraphiQL: true,
+    })
 
+    gq := e.Group("/graphql")
+    gq.POST("",echo.WrapHandler(h))
+
+    // API REST ==========================================================================
     ar := e.Group("")
     ar.Use(middleware.Logger())
     ar.Use(middleware.Recover())
@@ -54,6 +60,10 @@ func main() {
     ar.POST("/forgout/validate",api.ForgoutValidate)
     ar.POST("/forgout/change",api.ForgoutChange)
     ar.POST("/register",api.RegisterUser)
+
+    // STATIC FILES =======================================================================
+    st := e.Group("")
+    st.Static("/","public")
 
     e.Logger.Fatal(e.Start(":"+port))
 }
