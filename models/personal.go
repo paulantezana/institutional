@@ -53,7 +53,6 @@ var PersonalType = graphql.NewObject(
 			"direccion":        &graphql.Field{Type: graphql.String},
 			"celular":          &graphql.Field{Type: graphql.String},
 			"telefono":         &graphql.Field{Type: graphql.String},
-			"correo":           &graphql.Field{Type: graphql.String},
 			"estado_civil":     &graphql.Field{Type: graphql.String},
 			"foto":             &graphql.Field{Type: graphql.String},
 			"fecha_ingreso":    &graphql.Field{Type: graphql.DateTime},

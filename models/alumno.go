@@ -17,13 +17,12 @@ type Alumno struct {
 	ApellidoMaterno string     `json:"apellido_materno" gorm:"type:varchar(128); not null"`
 	FechaNacimiento time.Time  `json:"fecha_nacimiento"`
 	Sexo            string     `json:"sexo"`
-	Pais            string     `json:"pais" gorm:"type:varchar(64); not null"`
+	Pais            string     `json:"pais" gorm:"type:varchar(64)"`
 	Departamento    string     `json:"departamento" gorm:"type:varchar(64);"`
 	Direccion       string     `json:"direccion" gorm:"type:varchar(128);"`
 	Celular         string     `json:"celular" gorm:"type:varchar(16); unique"`
 	Telefono        string     `json:"telefono" gorm:"type:varchar(16); unique"`
 	EstadoCivil     string     `json:"estado_civil" gorm:"type:varchar(64)"`
-	Foto            string     `json:"foto"`
 	FechaAdmicion   time.Time  `json:"fecha_admicion"`
 	FechaPromocion  time.Time  `json:"fecha_promocion"`
 	Estado          bool       `json:"estado" gorm:"default:'true'"`
@@ -55,9 +54,7 @@ var AlumnoType = graphql.NewObject(
 			"direccion":        &graphql.Field{Type: graphql.String},
 			"celular":          &graphql.Field{Type: graphql.String},
 			"telefono":         &graphql.Field{Type: graphql.String},
-			"correo":           &graphql.Field{Type: graphql.String},
 			"estado_civil":     &graphql.Field{Type: graphql.String},
-			"foto":             &graphql.Field{Type: graphql.String},
 			"fecha_admicion":   &graphql.Field{Type: graphql.DateTime},
 			"fecha_promocion":  &graphql.Field{Type: graphql.DateTime},
 			"estado":           &graphql.Field{Type: graphql.Boolean},
