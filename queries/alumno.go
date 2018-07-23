@@ -23,7 +23,7 @@ func AlumnoQuery() *graphql.Field {
 
 func AlumnoIDQuery() *graphql.Field {
     return &graphql.Field{
-        Type: graphql.NewList(models.AlumnoType),
+        Type: models.AlumnoType,
         Args: graphql.FieldConfigArgument{
             "id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
         },
