@@ -18,10 +18,10 @@ type Alumno struct {
 	FechaNacimiento time.Time  `json:"fecha_nacimiento"`
 	Sexo            string     `json:"sexo"`
 	Pais            string     `json:"pais" gorm:"type:varchar(64)"`
-	Departamento    string     `json:"departamento" gorm:"type:varchar(64);"`
-	Direccion       string     `json:"direccion" gorm:"type:varchar(128);"`
-	Celular         string     `json:"celular" gorm:"type:varchar(16); unique"`
-	Telefono        string     `json:"telefono" gorm:"type:varchar(16); unique"`
+	Departamento    string     `json:"departamento" gorm:"type:varchar(64)"`
+	Direccion       string     `json:"direccion" gorm:"type:varchar(128)"`
+	Celular         string     `json:"celular" gorm:"type:varchar(16)"`
+	Telefono        string     `json:"telefono" gorm:"type:varchar(16)"`
 	EstadoCivil     string     `json:"estado_civil" gorm:"type:varchar(64)"`
 	FechaAdmicion   time.Time  `json:"fecha_admicion"`
 	FechaPromocion  time.Time  `json:"fecha_promocion"`
