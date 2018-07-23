@@ -65,6 +65,7 @@ func main() {
     st := e.Group("")
     st.Static("/","public")
 
+    // Start Server
     e.Logger.Fatal(e.Start(":"+port))
 }
 

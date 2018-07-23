@@ -26,6 +26,7 @@ type Alumno struct {
 	FechaAdmicion   time.Time  `json:"fecha_admicion"`
 	FechaPromocion  time.Time  `json:"fecha_promocion"`
 	Estado          bool       `json:"estado" gorm:"default:'true'"`
+
 	UsuarioID       uint       `json:"usuario_id"`
 }
 
