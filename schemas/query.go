@@ -23,6 +23,7 @@ func RootQuery() graphql.Fields {
 
         "Usuarios":   queries.UsuarioQuery(),
         "Alumnos":    queries.AlumnoQuery(),
+        "AlumnoID": queries.AlumnoIDQuery(),
         "Profesores": queries.ProfesorQuery(),
         "Personales": queries.PersonalQuery(),
     }
