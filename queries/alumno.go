@@ -29,7 +29,7 @@ func AlumnoQuery() *graphql.Field {
 
 			alumnos := make([]models.Alumno, 0)
 
-			if err := db.Where("name LIKE ?", fmt.Sprint("%"+a.Dni+"%")).Find(&alumnos).Error; err != nil {
+			if err := db.Where("dni LIKE ?", fmt.Sprint("%"+a.Dni+"%")).Find(&alumnos).Error; err != nil {
 				return nil, err
 			}
 			return alumnos, nil
