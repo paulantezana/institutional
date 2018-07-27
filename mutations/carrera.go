@@ -14,9 +14,7 @@ func CreateCarreraMutation() *graphql.Field {
 		Args: graphql.FieldConfigArgument{
 			"nombre":      &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.String)},
 			"logo":        &graphql.ArgumentConfig{Type: graphql.String},
-			"descripcion": &graphql.ArgumentConfig{Type: graphql.String},
 			"creacion":    &graphql.ArgumentConfig{Type: graphql.Int},
-			"estado":      &graphql.ArgumentConfig{Type: graphql.Boolean},
 			"filial_id":   &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
@@ -28,9 +26,6 @@ func CreateCarreraMutation() *graphql.Field {
 			// Arguments optionals
             if p.Args["logo"] != nil {
                 carrera.Logo = p.Args["logo"].(string)
-            }
-            if p.Args["descripcion"] != nil {
-                carrera.Descripcion = p.Args["descripcion"].(string)
             }
             if p.Args["creacion"] != nil {
                 carrera.Creacion = uint16(p.Args["creacion"].(int))
@@ -59,7 +54,6 @@ func UpdateCarreraMutation() *graphql.Field {
 			"id":          &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
             "nombre":      &graphql.ArgumentConfig{Type: graphql.String},
             "logo":        &graphql.ArgumentConfig{Type: graphql.String},
-            "descripcion": &graphql.ArgumentConfig{Type: graphql.String},
             "creacion":    &graphql.ArgumentConfig{Type: graphql.Int},
             "estado":      &graphql.ArgumentConfig{Type: graphql.Boolean},
             "filial_id":   &graphql.ArgumentConfig{Type: graphql.Int},
@@ -82,9 +76,6 @@ func UpdateCarreraMutation() *graphql.Field {
             }
             if p.Args["logo"] != nil {
                 carrera.Logo = p.Args["logo"].(string)
-            }
-            if p.Args["descripcion"] != nil {
-                carrera.Descripcion = p.Args["descripcion"].(string)
             }
             if p.Args["creacion"] != nil {
                 carrera.Creacion = uint16(p.Args["creacion"].(int))

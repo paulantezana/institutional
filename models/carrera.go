@@ -13,7 +13,6 @@ type Carrera struct {
 	DeletedAt   *time.Time `json:"deleted_at"`
 	Nombre      string     `json:"nombre" gorm:"type:varchar(128); not null; unique"`
 	Logo        string     `json:"logo" gorm:"type:varchar(128)"`
-	Descripcion string     `json:"descripcion"`
 	Creacion    uint16     `json:"creacion"`
 	Estado      bool       `json:"estado" gorm:"default:'true'"`
 	FilialID    uint       `json:"filial_id"`
@@ -36,7 +35,6 @@ var CarreraType = graphql.NewObject(
 			"deleted_at":  &graphql.Field{Type: graphql.DateTime},
 			"nombre":      &graphql.Field{Type: graphql.String},
 			"logo":        &graphql.Field{Type: graphql.String},
-			"descripcion": &graphql.Field{Type: graphql.String},
 			"creacion":    &graphql.Field{Type: graphql.Int},
 			"filial_id":   &graphql.Field{Type: graphql.Int},
 			"estado":      &graphql.Field{Type: graphql.Boolean},
