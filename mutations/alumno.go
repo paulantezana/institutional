@@ -101,6 +101,21 @@ func UpdateAlumnoMutation() *graphql.Field {
 		Type: models.AlumnoType,
 		Args: graphql.FieldConfigArgument{
             "id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
+            "dni":              &graphql.ArgumentConfig{Type: graphql.String},
+            "nombres":          &graphql.ArgumentConfig{Type: graphql.String},
+            "apellido_paterno": &graphql.ArgumentConfig{Type: graphql.String},
+            "apellido_materno": &graphql.ArgumentConfig{Type: graphql.String},
+            "fecha_nacimiento": &graphql.ArgumentConfig{Type: graphql.DateTime},
+            "sexo":             &graphql.ArgumentConfig{Type: graphql.String},
+            "pais":             &graphql.ArgumentConfig{Type: graphql.String},
+            "departamento":     &graphql.ArgumentConfig{Type: graphql.String},
+            "direccion":        &graphql.ArgumentConfig{Type: graphql.String},
+            "celular":          &graphql.ArgumentConfig{Type: graphql.String},
+            "telefono":         &graphql.ArgumentConfig{Type: graphql.String},
+            "estado_civil":     &graphql.ArgumentConfig{Type: graphql.String},
+            "fecha_admicion":   &graphql.ArgumentConfig{Type: graphql.DateTime},
+            "fecha_promocion":  &graphql.ArgumentConfig{Type: graphql.DateTime},
+            "estado":           &graphql.ArgumentConfig{Type: graphql.Boolean},
         },
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			alumno := models.Alumno{
