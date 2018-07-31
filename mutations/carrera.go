@@ -84,7 +84,7 @@ func UpdateCarreraMutation() *graphql.Field {
 				carrera.Estado = p.Args["estado"].(bool)
 			}
 			if p.Args["filial_id"] != nil {
-				carrera.Logo = p.Args["filial_id"].(string)
+				carrera.FilialID =  uint(p.Args["filial_id"].(int))
 			}
 
 			// Execute operations
