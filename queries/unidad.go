@@ -20,3 +20,26 @@ func UnidadQuery() *graphql.Field {
 		},
 	}
 }
+
+func UnidadIDQuery() *graphql.Field {
+	return &graphql.Field{
+		Type: models.ModuloType,
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			unidad := models.Unidad{}
+			id := p.Args["id"].(int)
+
+			// Get connection
+			db := config.GetConnection()
+			defer db.Close()
+
+			// Execute instructions
+			if err := db.First(&unidad, id).Error; err != nil {
+				return nil, err
+			}
+			return unidad, nil
+		},
+	}
+}

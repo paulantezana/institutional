@@ -17,24 +17,23 @@ type Database struct {
 }
 
 type Email struct {
-    Name string
-    From string
-    Password string
-    Server string
-    Host string
+	Name     string
+	From     string
+	Password string
+	Server   string
+	Host     string
 }
 
 type Config struct {
 	Database Database
-	Email Email
-    Server Server
+	Email    Email
+	Server   Server
 }
 
 type Server struct {
-    Port string
-    Key string
+	Port string
+	Key  string
 }
-
 
 // GetConfig return configuration from database json
 func GetConfig() Config {

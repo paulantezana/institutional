@@ -20,3 +20,26 @@ func InstitutoQuery() *graphql.Field {
 		},
 	}
 }
+
+func InstitutoIDQuery() *graphql.Field {
+	return &graphql.Field{
+		Type: models.InstitutoType,
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			instituto := models.Instituto{}
+			id := p.Args["id"].(int)
+
+			// Get connection
+			db := config.GetConnection()
+			defer db.Close()
+
+			// Execute instructions
+			if err := db.First(&instituto, id).Error; err != nil {
+				return nil, err
+			}
+			return instituto, nil
+		},
+	}
+}

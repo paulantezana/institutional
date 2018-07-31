@@ -24,8 +24,8 @@ type Usuario struct {
 	Alumno                 []Alumno   `json:"alumno,omitempty"`
 	Profesor               []Profesor `json:"profesor,omitempty"`
 
-	ConfirmarClave         string     `json:"confirmar_clave,omitempty" gorm:"-"`
-	ClaveAntigua           string     `json:"clave_antigua,omitempty" gorm:"-"`
+	ConfirmarClave string `json:"confirmar_clave,omitempty" gorm:"-"`
+	ClaveAntigua   string `json:"clave_antigua,omitempty" gorm:"-"`
 }
 
 // Database custom table name

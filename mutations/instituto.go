@@ -1,11 +1,11 @@
 package mutations
 
 import (
+	"errors"
+	"fmt"
 	"github.com/graphql-go/graphql"
 	"github.com/paulantezana/institutional/config"
 	"github.com/paulantezana/institutional/models"
-    "errors"
-    "fmt"
 )
 
 func CreateInstitutoMutation() *graphql.Field {
@@ -80,28 +80,28 @@ func UpdateInstitutoMutation() *graphql.Field {
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			instituto := models.Instituto{
-				ID:       uint(p.Args["id"].(int)),
+				ID: uint(p.Args["id"].(int)),
 			}
 
-            // get connection
-            db := config.GetConnection()
-            defer db.Close()
+			// get connection
+			db := config.GetConnection()
+			defer db.Close()
 
-            if db.First(&instituto).RecordNotFound() {
-                return nil, errors.New(fmt.Sprintf("The record with the id %d was not found",instituto.ID))
-            }
+			if db.First(&instituto).RecordNotFound() {
+				return nil, errors.New(fmt.Sprintf("The record with the id %d was not found", instituto.ID))
+			}
 
-            if p.Args["nombre"] != nil {
-                instituto.Nombre = p.Args["nombre"].(string)
-            }
+			if p.Args["nombre"] != nil {
+				instituto.Nombre = p.Args["nombre"].(string)
+			}
 
 			if p.Args["logo"] != nil {
 				instituto.Logo = p.Args["logo"].(string)
 			}
 
-            if p.Args["director"] != nil {
-                instituto.Director = p.Args["director"].(string)
-            }
+			if p.Args["director"] != nil {
+				instituto.Director = p.Args["director"].(string)
+			}
 
 			if p.Args["dregre"] != nil {
 				instituto.DREGRE = p.Args["dregre"].(string)
@@ -148,9 +148,9 @@ func DeleteInstitutoMutation() *graphql.Field {
 			db := config.GetConnection()
 			defer db.Close()
 
-            if db.First(&instituto).RecordNotFound() {
-                return nil, errors.New(fmt.Sprintf("The record with the id %d was not found",instituto.ID))
-            }
+			if db.First(&instituto).RecordNotFound() {
+				return nil, errors.New(fmt.Sprintf("The record with the id %d was not found", instituto.ID))
+			}
 
 			// Execute operations
 			if err := db.Delete(&instituto).Error; err != nil {

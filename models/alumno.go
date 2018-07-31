@@ -27,7 +27,7 @@ type Alumno struct {
 	FechaPromocion  time.Time  `json:"fecha_promocion"`
 	Estado          bool       `json:"estado" gorm:"default:'true'"`
 
-	UsuarioID       uint       `json:"usuario_id"`
+	UsuarioID uint `json:"usuario_id"`
 }
 
 // Database custom table name

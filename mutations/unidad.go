@@ -1,11 +1,11 @@
 package mutations
 
 import (
+	"errors"
+	"fmt"
 	"github.com/graphql-go/graphql"
 	"github.com/paulantezana/institutional/config"
 	"github.com/paulantezana/institutional/models"
-    "errors"
-    "fmt"
 )
 
 func CreateUnidadMutation() *graphql.Field {
@@ -26,10 +26,10 @@ func CreateUnidadMutation() *graphql.Field {
 				ModuloID: uint(p.Args["modulo_id"].(int)),
 			}
 
-            // Arguments optionals
-            if p.Args["estado"] != nil {
-                unidad.Estado = p.Args["estado"].(bool)
-            }
+			// Arguments optionals
+			if p.Args["estado"] != nil {
+				unidad.Estado = p.Args["estado"].(bool)
+			}
 
 			// get connection
 			db := config.GetConnection()
@@ -58,33 +58,33 @@ func UpdateUnidadMutation() *graphql.Field {
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			unidad := models.Unidad{
-				ID:       uint(p.Args["id"].(int)),
+				ID: uint(p.Args["id"].(int)),
 			}
 
 			// get connection
 			db := config.GetConnection()
 			defer db.Close()
 
-            if db.First(&unidad).RecordNotFound() {
-                return nil, errors.New(fmt.Sprintf("The record with the id %d was not found",unidad.ID))
-            }
+			if db.First(&unidad).RecordNotFound() {
+				return nil, errors.New(fmt.Sprintf("The record with the id %d was not found", unidad.ID))
+			}
 
-            // Arguments optionals
-            if p.Args["nombre"] != nil {
-                unidad.Nombre = p.Args["nombre"].(string)
-            }
-            if p.Args["credito"] != nil {
-                unidad.Credito = float32(p.Args["credito"].(float64))
-            }
-            if p.Args["horas"] != nil {
-                unidad.Horas = uint16(p.Args["horas"].(int))
-            }
-            if p.Args["estado"] != nil {
-                unidad.Estado = p.Args["estado"].(bool)
-            }
-            if p.Args["modulo_id"] != nil {
-                unidad.ModuloID =  uint(p.Args["modulo_id"].(int))
-            }
+			// Arguments optionals
+			if p.Args["nombre"] != nil {
+				unidad.Nombre = p.Args["nombre"].(string)
+			}
+			if p.Args["credito"] != nil {
+				unidad.Credito = float32(p.Args["credito"].(float64))
+			}
+			if p.Args["horas"] != nil {
+				unidad.Horas = uint16(p.Args["horas"].(int))
+			}
+			if p.Args["estado"] != nil {
+				unidad.Estado = p.Args["estado"].(bool)
+			}
+			if p.Args["modulo_id"] != nil {
+				unidad.ModuloID = uint(p.Args["modulo_id"].(int))
+			}
 
 			// Execute operations
 			if err := db.Model(&unidad).Update(unidad).Error; err != nil {
@@ -111,9 +111,9 @@ func DeleteUnidadMutation() *graphql.Field {
 			db := config.GetConnection()
 			defer db.Close()
 
-            if db.First(&unidad).RecordNotFound() {
-                return nil, errors.New(fmt.Sprintf("The record with the id %d was not found",unidad.ID))
-            }
+			if db.First(&unidad).RecordNotFound() {
+				return nil, errors.New(fmt.Sprintf("The record with the id %d was not found", unidad.ID))
+			}
 
 			// Execute operations
 			if err := db.Delete(&unidad).Error; err != nil {

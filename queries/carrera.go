@@ -20,3 +20,26 @@ func CarreraQuery() *graphql.Field {
 		},
 	}
 }
+
+func CarreraIDQuery() *graphql.Field {
+	return &graphql.Field{
+		Type: models.CarreraType,
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			carrera := models.Carrera{}
+			id := p.Args["id"].(int)
+
+			// Get connection
+			db := config.GetConnection()
+			defer db.Close()
+
+			// Execute instructions
+			if err := db.First(&carrera, id).Error; err != nil {
+				return nil, err
+			}
+			return carrera, nil
+		},
+	}
+}
