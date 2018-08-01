@@ -23,7 +23,7 @@ func UnidadQuery() *graphql.Field {
 
 func UnidadIDQuery() *graphql.Field {
 	return &graphql.Field{
-		Type: models.ModuloType,
+		Type: models.UnidadType,
 		Args: graphql.FieldConfigArgument{
 			"id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
 		},

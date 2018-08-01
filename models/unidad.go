@@ -14,7 +14,7 @@ type Unidad struct {
 	Nombre    string     `json:"nombre" gorm:"type:varchar(128); not null"`
 	Credito   float32    `json:"credito" gorm:"not null"`
 	Horas     uint16     `json:"horas" gorm:"not null"`
-	Estado    bool       `json:"estado" gorm:"default:'true'"`
+	Estado    bool       `json:"estado"`
 	ModuloID  uint       `json:"modulo_id"`
 }
 
