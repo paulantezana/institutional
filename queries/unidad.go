@@ -9,13 +9,32 @@ import (
 func UnidadQuery() *graphql.Field {
 	return &graphql.Field{
 		Type: graphql.NewList(models.UnidadType),
+        Args: graphql.FieldConfigArgument{
+            "search": &graphql.ArgumentConfig{Type: graphql.String},
+        },
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			db := config.GetConnection()
-			defer db.Close()
-			unidades := make([]models.Unidad, 0)
+            // Declare Variables
+            search := ""
+            unidades := make([]models.Unidad, 0)
+
+            // Query Params
+            if p.Args["search"] != nil {
+                search = p.Args["search"].(string)
+            }
+
+            // Get connection
+            db := config.GetConnection()
+            defer db.Close()
+
 			if err := db.Find(&unidades).Error; err != nil {
 				return nil, err
 			}
+
+            // Execute instructions
+            if err := db.Where("nombre LIKE ?", "%"+search+"%").Find(&unidades).Error; err != nil {
+                return nil, err
+            }
+
 			return unidades, nil
 		},
 	}
